@@ -1,616 +1,84 @@
-<!doctype html>
-<html lang="ko">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>오늘의 서울아산병원</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg:#f6f7f8; --card:#fff; --line:#e4e7ea; --line2:#eef0f2;
-    --ink:#1b1f23; --ink2:#4a525a; --ink3:#868e96; --accent:#0d5c4f;
-    --hi:#d9412f; --mid:#e08a00; --lo:#4f7bb0; --na:#9aa1a8;
-  }
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans KR",system-ui,-apple-system,"Apple SD Gothic Neo",sans-serif;font-size:17px;line-height:1.55}
-  .wrap{max-width:1120px;margin:0 auto;padding:30px 22px 72px}
-  h1{margin:0;font-size:32px;font-weight:700;letter-spacing:-.02em}
-  .topline{margin-top:8px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:14.5px;color:var(--ink3)}
-  .explbtn{font:inherit;font-size:13.5px;color:var(--ink2);background:#f0f1f3;border:0;border-radius:999px;padding:4px 11px;cursor:pointer}
-  .qlink{font-size:13.5px;font-weight:600;color:#1f6f61;background:#dcf0ea;border-radius:999px;padding:5px 13px;text-decoration:none;display:inline-flex;align-items:center;gap:4px}
-  .qlink:hover{background:#cdeae1}
-  .explain{margin-top:12px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:14px 18px;font-size:15px;color:var(--ink2);line-height:1.7}
-  .explain[hidden]{display:none}
-  .explain dt{font-weight:700;color:var(--ink)}
-  .explain dd{margin:0 0 8px}
+const OWNER = 'kms100493-cloud';
+const REPO = 'asan-event-tracker';
+const FILE_PATH = 'data/events.md';
+const HEADER_ROW = 4;   // 머리글 행
+const DATA_START = 5;   // 데이터 시작 행
+const EXCLUDE = [];     // 페이지에 내보내지 않을 열 이름
+const UPDATE_RE = /^(synced|updated):.*\n*/m;
 
-  .card{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:20px 22px;margin-top:22px}
-  .pills{display:flex;flex-wrap:wrap;gap:10px}
-  .gp{font:inherit;font-size:17px;font-weight:600;border-radius:999px;padding:10px 20px;cursor:pointer;border:0;display:inline-flex;align-items:center;gap:8px;background:color-mix(in srgb, var(--c) 14%, white);color:var(--ink)}
-  .gp i{width:9px;height:9px;border-radius:50%;background:var(--c);display:inline-block}
-  .gp b{font-weight:700}
-  .gp.all{background:#1b1f23;color:#fff}
-  .gp.all i{display:none}
-  .gp.on{box-shadow:0 0 0 2px var(--c) inset}
-  .gp.all.on{box-shadow:none}
-  .gp:hover{filter:brightness(.97)}
-  .stack{display:flex;height:10px;border-radius:999px;overflow:hidden;gap:2px;margin-top:16px;background:var(--line2)}
-  .stack span{display:block;height:100%}
-
-  .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:16px}
-  .lbl{font-size:16px;font-weight:600;color:var(--ink2);margin-right:2px}
-  input[type=date],select,input[type=search]{font:inherit;font-size:15.5px;border:1px solid var(--line);background:var(--card);border-radius:14px;padding:9px 12px;color:var(--ink);outline:none}
-  input[type=date]:focus,select:focus,input[type=search]:focus{border-color:var(--accent)}
-  .tilde{color:var(--ink3)}
-  .seg{display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:3px;flex-wrap:wrap}
-  .seg button{border:0;background:none;font:inherit;font-size:15.5px;padding:8px 14px;border-radius:999px;color:var(--ink2);cursor:pointer}
-  .seg button.on{background:var(--ink);color:#fff}
-  .calbtn{margin-left:auto;font:inherit;font-size:15.5px;font-weight:600;color:#1f6f61;background:#dcf0ea;border:1px solid #c3e4da;border-radius:999px;padding:8px 18px;cursor:pointer}
-  .calbtn:hover{background:#cdeae1}
-  .search{flex:1;min-width:240px}
-  .search input{width:100%}
-
-  .ghead{display:flex;align-items:baseline;gap:10px;padding:22px 4px 6px;margin-top:14px}
-  .ghead .d{font-size:21px;font-weight:700}
-  .ghead .wd{font-size:16px;color:var(--ink2)}
-  .ghead .today{font-size:13px;font-weight:800;color:var(--hi);letter-spacing:.06em}
-  .ghead .n{margin-left:auto;font-size:15px;color:var(--ink3)}
-  .toc{background:var(--card);border:1px solid var(--line);border-radius:22px;overflow:hidden;margin-top:10px}
-  .it{border-bottom:1px solid var(--line2)}
-  .it:last-child{border-bottom:0}
-  .it > summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:14px;padding:18px 22px}
-  .it > summary::-webkit-details-marker{display:none}
-  .it > summary:hover,.it[open] > summary{background:#f8fafb}
-  .tm{width:118px;flex:none;font-size:16px;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap}
-  .tm.na{color:#b5bbc1}
-  .lv{flex:none;min-width:30px;text-align:center;font-size:14px;font-weight:700;color:#fff;border-radius:6px;padding:3px 8px;background:var(--na)}
-  .lv.상{background:var(--hi)} .lv.중{background:var(--mid)} .lv.하{background:var(--lo)}
-  .tbadge{display:inline-flex;align-items:center;gap:5px;flex:none;font-size:14px;font-weight:600;color:#0e7a66;background:#e3f4f0;border-radius:6px;padding:3px 10px 3px 7px;white-space:nowrap}
-  .tbadge svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-  .tbadge.재단{color:#93690a;background:#fbf3df}
-  .tbadge.연구원{color:#5a40bf;background:#efebfb}
-  .mid{flex:1;min-width:0}
-  .nt{font-size:19px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .dtag{display:inline-block;margin-left:8px;font-size:13px;font-weight:600;color:var(--ink2);background:var(--line2);border-radius:999px;padding:2px 9px;vertical-align:3px}
-  .sub{margin-top:4px;font-size:16px;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .sep{color:#c5cbd1;margin:0 8px}
-  .hb{flex:none;font-size:15px;font-weight:600;color:var(--accent);white-space:nowrap;background:#e6f2ee;border-radius:999px;padding:3px 11px}
-  .hb.zero{color:var(--ink3);font-weight:500;background:var(--line2)}
-  .chev{flex:none;font-size:12px;color:var(--ink3)}
-  .it[open] .chev{transform:rotate(180deg)}
-  .bd{padding:4px 22px 20px 158px;font-size:16px;color:var(--ink2)}
-  .box{border-radius:18px;padding:14px 16px;margin-top:12px}
-  .bt{font-size:16.5px;font-weight:700;color:var(--ink);display:flex;align-items:center;gap:8px}
-  .box.info{background:#f4f6f7}
-  .ir{display:grid;grid-template-columns:64px 1fr;gap:10px;margin-top:8px;font-size:16px;align-items:baseline}
-  .ir span{font-size:14.5px;color:var(--ink3);font-weight:600}
-  .ir b{font-weight:500;color:var(--ink)}
-  .team{color:var(--ink3)}
-  .box.ai{background:#f4f1fd}
-  .box.ai .bt{color:#5b41c4}
-  .box.ai .bx{margin-top:6px;line-height:1.65;color:var(--ink)}
-  .box.hist{background:#eef6f3}
-  .box.hist .bt{color:var(--accent)}
-  .hcnt{background:var(--accent);color:#fff;border-radius:999px;padding:1px 10px;font-size:14px;font-weight:700}
-  .hnote{margin-top:6px;font-size:14.5px;color:var(--ink3)}
-  .hls{margin-top:8px;display:grid;gap:5px;color:var(--ink)}
-  .hls > div,.hrest > div{display:flex;gap:10px;align-items:baseline;font-size:15.5px;line-height:1.5}
-  .hls b{font-weight:700;min-width:58px}
-  .lcorner{color:var(--ink3);font-size:13.5px}
-  .morebtn{margin-top:8px;font:inherit;font-size:14.5px;font-weight:600;color:var(--accent);background:none;border:0;padding:0;cursor:pointer}
-  .golink{display:inline-block;margin-top:16px;font-size:16px;font-weight:600;color:#fff;background:var(--accent);border-radius:999px;padding:8px 16px;text-decoration:none}
-  .golink:hover{background:#06342c}
-
-  .cal-head{display:flex;align-items:center;gap:10px;margin:22px 0 12px}
-  .cal-head button{font:inherit;font-size:16px;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:7px 14px;cursor:pointer}
-  .cal-head .mt{font-size:22px;font-weight:600;margin-left:6px}
-  .cal{background:var(--card);border:1px solid var(--line);border-radius:22px;overflow:hidden}
-  .wk7{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
-  .wh{font-size:14px;font-weight:600;color:var(--ink3);text-align:center;padding:10px 0;border-bottom:1px solid var(--line)}
-  .wkrow{position:relative}
-  .days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
-  .day{min-height:190px;border-right:1px solid var(--line2);border-bottom:1px solid var(--line2);padding:8px 8px 10px;min-width:0}
-  .day:nth-child(7n){border-right:0}
-  .day.out{background:#fafbfb}
-  .day.out .dn span{color:#c2c7cc}
-  .dn{display:flex;align-items:center;justify-content:space-between;font-size:14px;font-weight:500;height:30px}
-  .dn span{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%}
-  .dn span.tday{background:var(--accent);color:#fff;font-weight:700}
-  .dn .more{font-size:13px;color:var(--ink3);width:auto;height:auto;border-radius:0}
-  .bars{position:absolute;left:0;right:0;top:38px;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));grid-auto-rows:28px;row-gap:5px;padding:0 3px;pointer-events:none}
-  .bars .bar{pointer-events:auto;cursor:pointer;border:0;text-align:left;font:inherit;font-size:14.5px;font-weight:600;color:#fff;padding:0 12px;height:28px;line-height:28px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-radius:14px;margin:0 3px;background:var(--na)}
-  .bars .bar.h{background:var(--hi)} .bars .bar.m{background:var(--mid)} .bars .bar.l{background:var(--lo)}
-  .bars .bar.cl{border-top-left-radius:0;border-bottom-left-radius:0;margin-left:0}
-  .bars .bar.cr{border-top-right-radius:0;border-bottom-right-radius:0;margin-right:0}
-
-  .ovl{position:fixed;inset:0;background:rgba(20,24,28,.38);display:none;align-items:center;justify-content:center;padding:16px;z-index:50}
-  .ovl.show{display:flex}
-  .pop{position:relative;width:100%;max-width:560px;max-height:86vh;overflow:auto;background:#fff;border-radius:26px;box-shadow:0 18px 50px rgba(0,0,0,.22);padding:24px 24px 22px}
-  .pclose{position:absolute;top:12px;right:12px;width:36px;height:36px;border:0;border-radius:50%;background:none;font-size:22px;color:var(--ink3);cursor:pointer}
-  .pclose:hover{background:var(--line2)}
-  .pop h3{margin:10px 0 0;font-size:22px;font-weight:700;letter-spacing:-.01em;line-height:1.4;padding-right:30px}
-  .pop .bd{padding:0}
-  .empty{padding:50px 0;text-align:center;color:var(--ink3)}
-  footer{margin-top:36px;font-size:14.5px;color:var(--ink3);text-align:right}
-
-  @media (max-width:640px){
-    .wrap{padding:22px 12px 50px}
-    .tm{width:auto}
-    .it > summary{flex-wrap:wrap;gap:6px 10px}
-    .mid{flex-basis:100%;order:9}
-    .bd{padding:4px 14px 16px}
-    .day{min-height:100px;padding:4px}
-    .bars{top:30px;grid-auto-rows:18px;row-gap:3px}
-    .bars .bar{font-size:0;height:18px;line-height:18px;padding:0;border-radius:9px}
-    .calbtn{margin-left:0}
-  }
-
-  /* ===== 모바일 전용 글씨 축소 (640px 이하) ===== */
-  @media (max-width:640px){
-    body{font-size:15px}
-    h1{font-size:25px}
-    .topline{font-size:13px}
-    .explain{font-size:13.5px}
-    .gp{font-size:14px;padding:7px 13px}
-    .lbl,.seg button{font-size:13.5px}
-    select,input[type=date],input[type=search]{font-size:13.5px}
-    .ghead .d{font-size:17px}
-    .ghead .wd,.ghead .n{font-size:13px}
-    .tm{font-size:13px}
-    .lv{font-size:11.5px;min-width:26px;padding:2px 6px}
-    .tbadge{font-size:11.5px;padding:2px 7px 2px 5px}
-    .tbadge svg{width:12px;height:12px}
-    .nt{font-size:15px}
-    .dtag{font-size:11px}
-    .sub{font-size:13px}
-    .hb{font-size:12.5px;padding:2px 8px}
-    .bd{font-size:14px}
-    .box{padding:11px 12px}
-    .bt{font-size:14px}
-    .ir{font-size:13.5px;grid-template-columns:52px 1fr}
-    .ir span{font-size:12px}
-    .box.ai .bx{font-size:13.5px}
-    .hcnt{font-size:12px}
-    .hnote{font-size:12.5px}
-    .hls > div,.hrest > div{font-size:13px}
-    .hls b{min-width:46px}
-    .lcorner{font-size:12px}
-    .morebtn{font-size:13px}
-    .golink{font-size:13px;padding:6px 12px}
-    .cal-head .mt{font-size:17px}
-    .cal-head button{font-size:14px}
-    .wh{font-size:12px}
-    .dn{font-size:12px}
-    .pop h3{font-size:18px}
-    .pop .ir{font-size:13.5px}
-    footer{font-size:12.5px}
-  }
-
-  /* ===== 모바일 한 줄 배치 ===== */
-  .calbtn.mob{display:none}
-  @media (max-width:640px){
-    .card{padding:14px 12px}
-    .pills{flex-wrap:nowrap;gap:4px}
-    .gp{flex:1 1 0;min-width:0;justify-content:center;padding:6px 2px;gap:3px;font-size:12.5px;letter-spacing:-.06em;white-space:nowrap}
-    .gp i{width:6px;height:6px}
-    .gp b{letter-spacing:-.06em}
-    .stack{margin-top:12px}
-    .row{gap:6px;margin-top:12px}
-    .lbl{font-size:13px;letter-spacing:-.06em}
-    input[type=date]{font-size:12.5px;padding:7px 6px;letter-spacing:-.06em;flex:1 1 0;min-width:0}
-    .tilde{font-size:13px}
-    #preset{display:flex;width:100%}
-    #preset button{flex:1 1 0;min-width:0;padding:6px 2px;font-size:12px;letter-spacing:-.06em;white-space:nowrap}
-    .calbtn.desk{display:none}
-    .row:has(#topicSel){display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
-    select{font-size:12px;letter-spacing:-.06em;padding:7px 4px;min-width:0;width:100%}
-    .search{grid-column:1 / span 2;min-width:0}
-    .search input{font-size:12.5px;letter-spacing:-.04em;padding:8px 9px}
-    .calbtn.mob{display:block;grid-column:3;margin:0;font-size:12.5px;letter-spacing:-.06em;padding:8px 4px;text-align:center}
-  }
-
-  /* ===== 모바일 캘린더 조정 ===== */
-  @media (max-width:640px){
-    .day{min-height:112px;padding:4px 3px 6px}
-    .dn{height:24px;font-size:11px}
-    .dn span{width:22px;height:22px}
-    .dn span.tday{width:22px;height:22px}
-    .dn .more{font-size:9.5px}
-  }
-
-  /* ===== 모바일 행사 바 얇게 ===== */
-  @media (max-width:640px){
-    .bars{top:30px;grid-auto-rows:12px;row-gap:3px;padding:0 1px}
-    .bars .bar{height:12px;line-height:12px;font-size:8.5px;padding:0 4px;border-radius:6px;margin:0 1px;font-weight:600}
-    .bars .bar.cl{border-top-left-radius:0;border-bottom-left-radius:0;margin-left:0}
-    .bars .bar.cr{border-top-right-radius:0;border-bottom-right-radius:0;margin-right:0}
-  }
-
-  /* ===== 캘린더 헤더: 화살표+월 가운데 정렬, 오늘 버튼 왼쪽 ===== */
-  .cal-head{position:relative;justify-content:center;min-height:40px;margin:22px 0 12px}
-  #calToday{position:absolute;left:0;top:50%;transform:translateY(-50%);margin:0}
-  .cal-head .mt{flex:0 0 auto;margin:0 6px;font-size:22px;white-space:nowrap}
-  @media (max-width:640px){
-    .cal-head{margin:16px 0 10px;min-height:34px}
-    #calToday{padding:5px 12px;font-size:13px}
-    .cal-head .mt{font-size:17px;margin:0 4px}
-  }
-
-  /* ===== PC 행사 바 높이 조금 줄이기 ===== */
-  @media (min-width:641px){
-    .bars{grid-auto-rows:22px;row-gap:4px}
-    .bars .bar{height:22px;line-height:22px;font-size:13.5px;border-radius:11px}
-  }
-
-  /* ===== PC 목록: 시간·중요도·주제 표기를 제목 줄에 맞춤 ===== */
-  @media (min-width:641px){
-    .it > summary{align-items:flex-start}
-    .nt{line-height:29px}
-    .tm,.lv,.tbadge,.hb,.chev{height:29px;display:inline-flex;align-items:center}
-    .lv{justify-content:center}
-    .chev{width:12px;justify-content:center}
-  }
-</style>
-</head>
-<body>
-<div class="wrap">
-  <h1>오늘의 서울아산병원</h1>
-  <div class="topline">
-    <span id="meta">불러오는 중…</span>
-    <button class="explbtn" id="explBtn" type="button">설명 ▾</button>
-    <a class="qlink" href="https://www.amc.seoul.kr/asan/academy/event/eventList.do" target="_blank" rel="noopener">학술행사</a>
-    <a class="qlink" href="http://asannet.amc.kr/" target="_blank" rel="noopener">아산넷</a>
-    <a class="qlink" href="http://asannet.amc.kr/egate45/sel/eip/home/home.nsf/openpage?readform&amp;applcode=od0300" target="_blank" rel="noopener">전화번호부</a>
-  </div>
-  <div class="explain" id="explain" hidden>
-    <dl>
-      <dt>출처</dt><dd>아산넷 게시물과 서울아산병원 학술행사 목록. 행사명을 누르면 원문으로 이동합니다.</dd>
-      <dt>중요도</dt><dd>상·중·하는 병원보 게재 관점에서 정한 등급입니다. 미표기는 아직 정하지 않은 항목입니다.</dd>
-      <dt>병원보 이력</dt><dd>병원보 편집계획안 리스트와 대조한 과거 게재 기록입니다.</dd>
-      <dt>AI 가이드</dt><dd>기사로 다룰 때 강조하면 좋을 점입니다. 수치를 쓸 때는 원문을 한 번 더 확인해 주세요.</dd>
-    </dl>
-  </div>
-
-  <section class="card">
-    <div class="pills" id="pills"></div>
-    <div class="stack" id="stack"></div>
-    <div class="row">
-      <span class="lbl">기간</span>
-      <input type="date" id="from"> <span class="tilde">~</span> <input type="date" id="to">
-      <div class="seg" id="preset">
-        <button data-p="today" class="on">오늘부터</button>
-        <button data-p="week">이번 주</button>
-        <button data-p="month">이번 달</button>
-        <button data-p="past">지난 행사</button>
-        <button data-p="all">전체</button>
-      </div>
-      <button class="calbtn desk" id="viewBtn" type="button">캘린더</button>
-    </div>
-    <div class="row">
-      <select id="topicSel"><option value="all">모든 주제</option><option>병원</option><option>연구</option><option>재단</option></select>
-      <select id="catSel"><option value="all">모든 분류</option></select>
-      <select id="histSel"><option value="all">병원보 전체</option><option value="has">이력 있음</option><option value="none">이력 없음</option></select>
-      <div class="search"><input type="search" id="q" placeholder="행사명·장소·담당자·병원보 기사 제목 검색"></div>
-      <button class="calbtn mob" type="button">캘린더</button>
-    </div>
-  </section>
-
-  <div id="list"></div>
-  <div id="cal" style="display:none"></div>
-
-  <footer>관리: 홍보팀 김미소</footer>
-</div>
-
-<div class="ovl" id="ovl"><div class="pop" id="pop" role="dialog" aria-modal="true"></div></div>
-
-<script>
-const SRC = 'data/events.md';
-const GRADES = ['상','중','하','미표기'];
-const COLORS = {상:'var(--hi)', 중:'var(--mid)', 하:'var(--lo)', 미표기:'var(--na)'};
-const MAXLANE = 4;
-const TIME_RE = /\d{1,2}:\d{2}(?:\s*[~-]\s*\d{1,2}:\d{2})?/;
-const PLACE_RE = /(관|실|홀|센터|강당|온라인|Zoom|지하|광장|구룡마을|연구원)/;
-const SKIP_RE = /주관|신청|대상|마감|사전|참여|문의|강사|주제|회차|까지|시리즈|등록|접수/;
-const POS = ['과장','차장','부장','대리','주임','사원','팀장','교수','간호사','수석부장','부실장','부원장','의국장','조교수','부교수','전문의','레지던트','임상강사','임상조교수','주임급','대리급','과장급','선임기능','센터장'];
-const TOPIC_ICON = {
-  병원:'<svg viewBox="0 0 24 24"><path d="M4 20V9l8-5 8 5v11M9 20v-5h6v5M12 8v3M10.5 9.5h3"/></svg>',
-  재단:'<svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>',
-  연구원:'<svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3"/></svg>'
-};
-
-let rows = [], view = 'list', grade = 'all', preset = 'today', query = '';
-const TODAY = new Date(); TODAY.setHours(0,0,0,0);
-let calBase = new Date(TODAY.getFullYear(), TODAY.getMonth(), 1);
-
-const pad = n => String(n).padStart(2,'0');
-const ymd = d => d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
-const esc = s => String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-
-function splitRow(line){ return line.trim().replace(/^\||\|$/g,'').split(/(?<!\\)\|/).map(s=>s.replace(/\\\|/g,'|').trim()); }
-function parse(md){
-  const lines = md.split('\n').filter(l => l.trim().startsWith('|'));
-  const head = splitRow(lines[0]);
-  return lines.slice(2).map(l => { const r = splitRow(l), o = {}; head.forEach((h,i) => o[h] = r[i] || ''); return o; }).filter(o => o['행사명']);
-}
-function dates(s){ return [...(s||'').matchAll(/(\d{4})-(\d{2})-(\d{2})/g)].map(m => new Date(+m[1], +m[2]-1, +m[3])); }
-function spanOf(r){
-  const ds = dates(r['행사일']); if(!ds.length) return null;
-  const st = ds[0]; let en = ds[ds.length-1];
-  const e = dates(r['종료일'])[0]; if(e && e >= st) en = e;
-  return {st, en};
-}
-const gradeOf = r => (r['사보 중요도']||'').trim() || '미표기';
-const topicOf = r => (r['주제별']||'').trim() || '미지정';
-const topicKey = r => ['병원','재단','연구원'].find(k => topicOf(r).includes(k)) || '';
-const histLines = r => (r['게재 호수·코너·기사 제목']||'').split(/\s*\|\s*/).filter(Boolean);
-const gcls = r => { const g = gradeOf(r); return g==='상'?'h':g==='중'?'m':g==='하'?'l':'x'; };
-const shortDate = d => `${pad(d.getMonth()+1)}/${pad(d.getDate())}`;
-
-function timeOf(r){ const m = (r['비고(공개 가능)']||'').match(TIME_RE); return m ? m[0].replace(/\s+/g,'') : ''; }
-function noteParts(r){ return (r['비고(공개 가능)']||'').split(/\s*·\s*/).filter(Boolean); }
-function placeOf(r){
-  const p = noteParts(r).find(x => PLACE_RE.test(x) && !TIME_RE.test(x) && !SKIP_RE.test(x));
-  return p ? p.replace(/^(\d{1,2}:\d{2}[^ ]*\s*)/,'').trim() : '';
-}
-function remainNote(r){ const place = placeOf(r); return noteParts(r).filter(x => !TIME_RE.test(x) && x !== place).join(' · '); }
-function fmtPerson(s){
-  s = (s||'').trim(); if(!s) return '';
-  if(s.includes(' / ')) return esc(s);
-  const paren = (s.match(/\((.*?)\)/)||[])[1] || '';
-  let t = s.replace(/\(.*?\)/g,'').replace(/\s+/g,' ').trim().split(' ');
-  let pos = '';
-  if(t.length>=2 && t[t.length-2]==='Unit' && t[t.length-1]==='Manager'){ pos = 'Unit Manager'; t = t.slice(0,-2); }
-  else if(POS.includes(t[t.length-1])){ pos = t.pop(); }
-  const name = t.length ? t.pop() : '';
-  const team = t.join(' ');
-  let out = esc([name,pos].filter(Boolean).join(' '));
-  if(team) out += `<span class="team">(${esc(team)})</span>`;
-  if(paren) out += ` <span class="team">· ${esc(paren)}</span>`;
-  return out;
-}
-function personsOf(r){
-  return [r['아산넷 등록자(게시글 올린 사람)'], r['행사 담당/문의(본문에 명시된 경우)']]
-    .map(v => (v||'').trim()).filter((v,i,a) => v && a.indexOf(v)===i).map(fmtPerson).join(' / ');
-}
-function topicBadge(r){ const k = topicKey(r); const label = k==='연구원' ? '연구' : k; return k ? `<span class="tbadge ${k}">${TOPIC_ICON[k]}${label}</span>` : ''; }
-function linkOf(r){ return /^https?:/.test(r['출처 링크']||'') ? r['출처 링크'] : ''; }
-
-function fmtHist(x){
-  const p = x.split(/\s*·\s*/);
-  const ho = p[0] || '', corner = p[1] || '', title = p.slice(2).join(' · ');
-  return `<div><b>${esc(ho)}</b><span>${esc(title || corner)}</span>${title && corner ? `<span class="lcorner">· ${esc(corner)}</span>` : ''}</div>`;
-}
-let uid = 0;
-function histBox(r){
-  const lines = histLines(r);
-  if(!lines.length && !r['사보 이력 비교']) return '';
-  const id = 'h' + (++uid);
-  const first = lines.slice(0,3), rest = lines.slice(3);
-  return `<div class="box hist">
-    <div class="bt">병원보 이력 <span class="hcnt">${lines.length}건</span></div>
-    ${r['사보 이력 비교'] ? `<div class="hnote">${esc(r['사보 이력 비교'])}</div>` : ''}
-    ${first.length ? `<div class="hls">${first.map(fmtHist).join('')}</div>` : ''}
-    ${rest.length ? `<div class="hls" id="${id}" hidden>${rest.map(fmtHist).join('')}</div><button type="button" class="morebtn" data-toggle="${id}" data-n="${rest.length}">+${rest.length}건 더보기</button>` : ''}
-  </div>`;
-}
-function detailHTML(r){
-  const note = remainNote(r);
-  const dateTxt = r['종료일'] ? `${r['종료일']}까지` : (r['행사일']||'');
-  const info = [
-    ['분류', esc(r['행사 분류']||'')],
-    ['기간', esc(dateTxt)],
-    ['장소', esc(placeOf(r))],
-    ['담당', personsOf(r)],
-    ['안내', esc(note)]
-  ].filter(([k,v]) => v);
-  const link = linkOf(r);
-  return `${info.length ? `<div class="box info"><div class="bt">기본 정보</div>${info.map(([k,v]) => `<div class="ir"><span>${k}</span><b>${v}</b></div>`).join('')}</div>` : ''}
-    ${r['AI 가이드'] ? `<div class="box ai"><div class="bt">AI 가이드</div><div class="bx">${esc(r['AI 가이드']).replace(/ \/ /g,'<br>')}</div></div>` : ''}
-    ${histBox(r)}
-    ${link ? `<a class="golink" href="${esc(link)}" target="_blank" rel="noopener">원문 보기 ↗</a>` : ''}`;
-}
-
-function inPreset(sp){
-  if(preset==='all') return true;
-  if(!sp) return false;
-  const {st:start, en:end} = sp;
-  const wStart = new Date(TODAY); wStart.setDate(TODAY.getDate()-((TODAY.getDay()+6)%7));
-  const wEnd = new Date(wStart); wEnd.setDate(wStart.getDate()+6);
-  const mStart = new Date(TODAY.getFullYear(), TODAY.getMonth(), 1);
-  const mEnd = new Date(TODAY.getFullYear(), TODAY.getMonth()+1, 0);
-  if(preset==='today') return end >= TODAY;
-  if(preset==='week') return start <= wEnd && end >= wStart;
-  if(preset==='month') return start <= mEnd && end >= mStart;
-  if(preset==='past') return end < TODAY;
-  return true;
-}
-function inRange(sp){
-  const f = document.getElementById('from').value, t = document.getElementById('to').value;
-  if(!f && !t) return true;
-  if(!sp) return false;
-  if(f && sp.en < new Date(f)) return false;
-  if(t && sp.st > new Date(t)) return false;
-  return true;
-}
-function passes(r){
-  const sp = spanOf(r);
-  if(grade!=='all' && gradeOf(r)!==grade) return false;
-  if(catSel.value!=='all' && r['행사 분류']!==catSel.value) return false;
-  if(topicSel.value!=='all' && !topicOf(r).includes(topicSel.value)) return false;
-  const hl = histLines(r).length;
-  if(histSel.value==='has' && !hl) return false;
-  if(histSel.value==='none' && hl) return false;
-  if(query && !Object.values(r).join(' ').toLowerCase().includes(query)) return false;
-  return inPreset(sp) && inRange(sp);
-}
-
-function renderPills(){
-  const counts = {}; GRADES.forEach(k => counts[k] = rows.filter(r => gradeOf(r)===k).length);
-  document.getElementById('pills').innerHTML =
-    `<button class="gp all ${grade==='all'?'on':''}" data-g="all"><b>전체</b> ${rows.length}</button>` +
-    GRADES.map(k => `<button class="gp ${grade===k?'on':''}" data-g="${k}" style="--c:${COLORS[k]}"><i></i>${k} <b>${counts[k]}</b></button>`).join('');
-  document.getElementById('stack').innerHTML = GRADES.map(k => counts[k] ? `<span style="flex:${counts[k]};background:${COLORS[k]}"></span>` : '').join('');
-  document.querySelectorAll('#pills .gp').forEach(b => b.onclick = () => {
-    const g = b.dataset.g;
-    grade = (g==='all' || grade===g) ? 'all' : g;
-    renderPills(); render();
-  });
-}
-function buildCats(){
-  const cats = [...new Set(rows.map(r=>r['행사 분류']).filter(Boolean))].sort();
-  const cur = catSel.value;
-  catSel.innerHTML = '<option value="all">모든 분류</option>' + cats.map(c=>`<option>${esc(c)}</option>`).join('');
-  catSel.value = cats.includes(cur) ? cur : 'all';
-}
-
-function listHTML(items){
-  if(!items.length) return '<div class="empty">조건에 맞는 행사가 없습니다.</div>';
-  const groups = {};
-  items.forEach(r => { const sp = spanOf(r); const key = sp ? ymd(sp.st) : '날짜 미정'; (groups[key] = groups[key] || []).push(r); });
-  return Object.keys(groups).sort((a,b) => a==='날짜 미정' ? 1 : b==='날짜 미정' ? -1 : a.localeCompare(b)).map(k => {
-    const d = k==='날짜 미정' ? null : new Date(k);
-    const wd = d ? '일월화수목금토'[d.getDay()] + '요일' : '';
-    const today = d && +d===+TODAY ? '<span class="today">TODAY</span>' : '';
-    const head = `<div class="ghead"><span class="d">${k==='날짜 미정' ? k : k.slice(5).replace('-','월 ') + '일'}</span><span class="wd">${wd}</span>${today}<span class="n">${groups[k].length}건</span></div>`;
-    const body = '<div class="toc">' + groups[k].map(r => {
-      const g = gradeOf(r), h = histLines(r).length;
-      const t = timeOf(r), place = placeOf(r), persons = personsOf(r);
-      const sp = spanOf(r);
-      const endTag = r['종료일'] && sp ? `<span class="dtag">~${shortDate(sp.en)}</span>` : '';
-      const sub = [place, persons].filter(Boolean).join('<span class="sep">|</span>') || '장소·담당 미기재';
-      return `<details class="it">
-        <summary>
-          <span class="tm ${t?'':'na'}">${t || '시간 미정'}</span>
-          <span class="lv ${g}">${g}</span>
-          ${topicBadge(r)}
-          <span class="mid">
-            <div class="nt">${esc(r['행사명'])}${endTag}</div>
-            <div class="sub">${sub}</div>
-          </span>
-          <span class="hb ${h?'':'zero'}">병원보 ${h}</span>
-          <span class="chev">▼</span>
-        </summary>
-        <div class="bd">${detailHTML(r)}</div>
-      </details>`;
-    }).join('') + '</div>';
-    return `<div class="group">${head}${body}</div>`;
-  }).join('');
-}
-
-function weekStartOf(d){ const s = new Date(d); s.setDate(d.getDate()-d.getDay()); return s; }
-function calHTML(items){
-  const first = new Date(calBase.getFullYear(), calBase.getMonth(), 1);
-  const monthEnd = new Date(calBase.getFullYear(), calBase.getMonth()+1, 0);
-  const gridStart = weekStartOf(first);
-  const nWeeks = Math.ceil((first.getDay() + monthEnd.getDate()) / 7);
-  let html = `<div class="cal-head"><button id="calToday">오늘</button><button id="calPrev">‹</button><span class="mt">${calBase.getFullYear()}년 ${calBase.getMonth()+1}월</span><button id="calNext">›</button></div>`;
-  let weeks = '';
-  for(let w=0; w<nWeeks; w++){
-    const ws = new Date(gridStart); ws.setDate(gridStart.getDate()+w*7);
-    const we = new Date(ws); we.setDate(ws.getDate()+6);
-    const segs = [];
-    items.forEach(r => {
-      const sp = spanOf(r); if(!sp) return;
-      if(sp.en < ws || sp.st > we) return;
-      segs.push({ r, s: sp.st<ws ? 0 : sp.st.getDay(), e: sp.en>we ? 6 : sp.en.getDay(), cl: sp.st<ws, cr: sp.en>we });
-    });
-    segs.sort((a,b) => a.s-b.s || (b.e-b.s)-(a.e-a.s));
-    const laneEnd = [];
-    segs.forEach(x => { let l = laneEnd.findIndex(le => le < x.s); if(l < 0){ l = laneEnd.length; laneEnd.push(x.e); } else laneEnd[l] = x.e; x.lane = l; });
-    const hidden = Array(7).fill(0);
-    segs.forEach(x => { if(x.lane >= MAXLANE) for(let c=x.s; c<=x.e; c++) hidden[c]++; });
-    let days = '';
-    for(let c=0; c<7; c++){
-      const d = new Date(ws); d.setDate(ws.getDate()+c);
-      const out = d.getMonth() !== calBase.getMonth();
-      days += `<div class="day${out?' out':''}"><div class="dn"><span class="${+d===+TODAY?'tday':''}">${d.getDate()}</span>${hidden[c]?`<span class="more">+${hidden[c]}</span>`:''}</div></div>`;
+// 시트 어딘가의 "Claude 최근 스크리닝: yyyy-mm-dd hh:mm" 문구에서 일시를 읽음
+function readStamp_(sheet){
+  const vals = sheet.getDataRange().getDisplayValues();
+  const re = /Claude 최근 스크리닝:\s*(\d{4}-\d{2}-\d{2} \d{2}:\d{2})/;
+  for (const row of vals){
+    for (const v of row){
+      const m = String(v).match(re);
+      if (m) return m[1];
     }
-    const bars = segs.filter(x => x.lane < MAXLANE).map(x => {
-      const cls = ['bar', gcls(x.r), x.cl?'cl':'', x.cr?'cr':''].join(' ');
-      return `<button type="button" class="${cls}" data-i="${rows.indexOf(x.r)}" style="grid-column:${x.s+1}/${x.e+2};grid-row:${x.lane+1}">${esc(x.r['행사명'])}</button>`;
-    }).join('');
-    weeks += `<div class="wkrow"><div class="days">${days}</div><div class="bars">${bars}</div></div>`;
   }
-  return html + `<div class="cal"><div class="wk7">${['일','월','화','수','목','금','토'].map(x=>`<div class="wh">${x}</div>`).join('')}</div>${weeks}</div>`;
+  return '';
 }
 
-function openPop(i){
-  const r = rows[i]; if(!r) return;
-  const g = gradeOf(r), t = timeOf(r);
-  document.getElementById('pop').innerHTML = `
-    <button class="pclose" aria-label="닫기">×</button>
-    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span class="lv ${g}">${g}</span>${topicBadge(r)}<span style="font-size:15px;color:var(--ink2)">${esc(r['행사일']||'')}${t ? ' · ' + t : ''}</span></div>
-    <h3>${esc(r['행사명'])}</h3>
-    <div class="bd" style="padding:0">${detailHTML(r)}</div>`;
-  document.getElementById('ovl').classList.add('show');
-}
-function closePop(){ document.getElementById('ovl').classList.remove('show'); }
-
-function render(){
-  const items = rows.filter(passes).sort((a,b) => {
-    const da = spanOf(a)?.st, db = spanOf(b)?.st;
-    if(!da && !db) return 0; if(!da) return 1; if(!db) return -1;
-    return da - db;
-  });
-  document.getElementById('meta').textContent = `표시 ${items.length}건 · 시트 전체 ${rows.length}건 · 화면 갱신 ${new Date().toLocaleString('ko-KR')}`;
-  const isList = view === 'list';
-  document.getElementById('list').style.display = isList ? '' : 'none';
-  document.getElementById('cal').style.display = isList ? 'none' : '';
-  document.querySelectorAll('.calbtn').forEach(b => b.textContent = isList ? '캘린더' : '목록');
-  if(isList){
-    document.getElementById('list').innerHTML = listHTML(items);
-  } else {
-    document.getElementById('cal').innerHTML = calHTML(items);
-    document.getElementById('calPrev').onclick = () => { calBase = new Date(calBase.getFullYear(), calBase.getMonth()-1, 1); render(); };
-    document.getElementById('calNext').onclick = () => { calBase = new Date(calBase.getFullYear(), calBase.getMonth()+1, 1); render(); };
-    document.getElementById('calToday').onclick = () => { calBase = new Date(TODAY.getFullYear(), TODAY.getMonth(), 1); render(); };
+function toMarkdown_(sheet){
+  const values = sheet.getDataRange().getValues();
+  const head = values[HEADER_ROW - 1].map(v => String(v).trim());
+  const cols = head.map((h, i) => ({h, i})).filter(c => c.h && !EXCLUDE.includes(c.h));
+  const fmt = v => v instanceof Date
+    ? Utilities.formatDate(v, 'Asia/Seoul', 'yyyy-MM-dd')
+    : String(v == null ? '' : v).replace(/\|/g, '\\|').replace(/\r?\n/g, ' ').trim();
+  const lines = [
+    '| ' + cols.map(c => c.h).join(' | ') + ' |',
+    '| ' + cols.map(() => '---').join(' | ') + ' |'
+  ];
+  for (let r = DATA_START - 1; r < values.length; r++){
+    const row = values[r];
+    if (!String(row[0]).trim()) continue;
+    lines.push('| ' + cols.map(c => fmt(row[c.i])).join(' | ') + ' |');
   }
+  return lines.join('\n');
 }
 
-const catSel = document.getElementById('catSel');
-const topicSel = document.getElementById('topicSel');
-const histSel = document.getElementById('histSel');
-[catSel, topicSel, histSel, document.getElementById('from'), document.getElementById('to')].forEach(el => el.onchange = render);
-document.getElementById('q').oninput = e => { query = e.target.value.trim().toLowerCase(); render(); };
-document.querySelectorAll('.calbtn').forEach(b => b.onclick = () => { view = view === 'list' ? 'cal' : 'list'; render(); });
-document.getElementById('explBtn').onclick = () => {
-  const ex = document.getElementById('explain'); ex.hidden = !ex.hidden;
-  document.getElementById('explBtn').textContent = ex.hidden ? '설명 ▾' : '설명 ▴';
-};
-document.querySelectorAll('#preset button').forEach(b => b.onclick = () => {
-  document.querySelectorAll('#preset button').forEach(x => x.classList.remove('on'));
-  b.classList.add('on'); preset = b.dataset.p; render();
-});
+function exportToGithub(){
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
+  const table = toMarkdown_(sheet);
+  const stamp = readStamp_(sheet);
+  const token = PropertiesService.getScriptProperties().getProperty('GITHUB_TOKEN');
+  const api = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${FILE_PATH}`;
+  const headers = {Authorization: 'Bearer ' + token, Accept: 'application/vnd.github+json'};
 
-document.addEventListener('click', e => {
-  const tg = e.target.closest('[data-toggle]');
-  if(tg){
-    const box = document.getElementById(tg.dataset.toggle);
-    const open = box.hidden;
-    box.hidden = !open;
-    tg.textContent = open ? '접기' : `+${tg.dataset.n}건 더보기`;
+  let sha = null, prevBody = null, prevStamp = null;
+  const got = UrlFetchApp.fetch(api, {headers, muteHttpExceptions: true});
+  if (got.getResponseCode() === 200){
+    const j = JSON.parse(got.getContentText());
+    sha = j.sha;
+    const text = Utilities.newBlob(Utilities.base64Decode(j.content.replace(/\n/g, ''))).getDataAsString('UTF-8');
+    const sm = text.match(/^updated:\s*(.*)$/m);
+    prevStamp = sm ? sm[1].trim() : null;
+    prevBody = text.replace(UPDATE_RE, '').trim();
+  }
+  if (prevStamp !== null && prevBody === table.trim() && prevStamp === stamp){
+    Logger.log('변경 없음');
     return;
   }
-  const bar = e.target.closest('[data-i]');
-  if(bar){ openPop(+bar.dataset.i); return; }
-  if(e.target.id === 'ovl' || e.target.classList.contains('pclose')) closePop();
-});
-document.addEventListener('keydown', e => { if(e.key === 'Escape') closePop(); });
 
-async function load(){
-  try{
-    const res = await fetch(SRC + '?t=' + Date.now(), {cache:'no-store'});
-    if(!res.ok) throw new Error(res.status);
-    rows = parse(await res.text());
-    buildCats(); renderPills(); render();
-  }catch(e){
-    document.getElementById('meta').textContent = '데이터를 불러오지 못했습니다. 잠시 후 새로고침하세요.';
-  }
+  const content = `updated: ${stamp}\n\n${table}\n`;
+  const body = {
+    message: `update ${stamp || '-'}`,
+    content: Utilities.base64Encode(content, Utilities.Charset.UTF_8),
+    branch: 'main'
+  };
+  if (sha) body.sha = sha;
+  const put = UrlFetchApp.fetch(api, {
+    method: 'put', contentType: 'application/json', headers,
+    payload: JSON.stringify(body), muteHttpExceptions: true
+  });
+  if (put.getResponseCode() >= 300) throw new Error('GitHub 업로드 실패: ' + put.getContentText());
+  Logger.log('업로드 완료: ' + (stamp || '-'));
 }
-load();
-setInterval(load, 5*60*1000);
-</script>
-</body>
-</html>
+
+function setupTrigger(){
+  ScriptApp.getProjectTriggers().forEach(t => {
+    if (t.getHandlerFunction() === 'exportToGithub') ScriptApp.deleteTrigger(t);
+  });
+  ScriptApp.newTrigger('exportToGithub').timeBased().everyMinutes(10).create();
+}
