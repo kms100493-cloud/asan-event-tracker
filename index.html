@@ -14,92 +14,87 @@
     --hi:#d9412f; --mid:#e08a00; --lo:#4f7bb0; --na:#9aa1a8;
   }
   *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans KR",system-ui,-apple-system,"Apple SD Gothic Neo",sans-serif;font-size:15px;line-height:1.55}
-  .wrap{max-width:1080px;margin:0 auto;padding:32px 20px 70px}
-  header h1{margin:0;font-size:28px;font-weight:700;letter-spacing:-.02em}
-  header .eyebrow{font-size:13px;font-weight:600;letter-spacing:.08em;color:var(--accent)}
-  header .meta{color:var(--ink3);font-size:14px;margin-top:6px}
-  .links{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-  .links a{font-size:12.5px;font-weight:600;color:#1f6f61;background:#dcf0ea;border-radius:6px;padding:3px 9px;text-decoration:none}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans KR",system-ui,-apple-system,"Apple SD Gothic Neo",sans-serif;font-size:17px;line-height:1.55}
+  .wrap{max-width:1120px;margin:0 auto;padding:34px 22px 72px}
+  header h1{margin:0;font-size:32px;font-weight:700;letter-spacing:-.02em}
+  header .eyebrow{font-size:14.5px;font-weight:600;letter-spacing:.08em;color:var(--accent)}
+  header .meta{color:var(--ink3);font-size:15px;margin-top:6px}
+  .links{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+  .links a{font-size:14.5px;font-weight:600;color:#1f6f61;background:#dcf0ea;border-radius:7px;padding:4px 11px;text-decoration:none}
   .links a:hover{background:#cdeae1}
 
-  .stats{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:22px 0 14px}
-  .sumtop{display:flex;align-items:baseline;gap:8px;margin-bottom:10px}
-  .sumtop .lb{font-size:14px;color:var(--ink3)}
-  .sumtop .tt{font-size:24px;font-weight:700;letter-spacing:-.02em}
-  .bar{display:flex;height:10px;border-radius:6px;overflow:hidden;gap:2px;background:var(--line2)}
-  .bar span{display:block;height:100%}
-  .legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;font-size:13px;color:var(--ink2)}
-  .legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;vertical-align:0}
-
-  .toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:10px}
+  .toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:22px 0 12px}
+  .gp{border:1.5px solid var(--c);background:color-mix(in srgb, var(--c) 14%, white);color:var(--c);font:inherit;font-size:16px;font-weight:700;border-radius:999px;padding:7px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+  .gp span{font-weight:600;opacity:.85}
+  .gp.on{background:var(--c);color:#fff}
+  .gp.on span{opacity:1}
+  .gp:hover{filter:brightness(.96)}
+  .gnote{font-size:14.5px;color:var(--ink3);margin-left:4px}
   .seg{display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:3px;flex-wrap:wrap}
-  .seg button{border:0;background:none;font:inherit;font-size:14px;padding:6px 12px;border-radius:7px;color:var(--ink2);cursor:pointer}
+  .seg button{border:0;background:none;font:inherit;font-size:15.5px;padding:7px 13px;border-radius:7px;color:var(--ink2);cursor:pointer}
   .seg button.on{background:var(--ink);color:#fff}
-  .seg button .n{opacity:.6;margin-left:3px;font-size:12px}
   #viewSeg{background:none;border:0;padding:0;gap:6px}
-  #viewSeg button{background:#eef7f4;color:#2f6b5f;border:1px solid #d5ebe3;border-radius:10px;padding:7px 14px;font-weight:600}
+  #viewSeg button{background:#eef7f4;color:#2f6b5f;border:1px solid #d5ebe3;border-radius:10px;padding:8px 15px;font-weight:600}
   #viewSeg button:hover{background:#e2f3ed}
   #viewSeg button.on{background:#bfe6da;color:#17584c;border-color:#a9dccb}
-  select,input[type=search]{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:8px 12px;color:var(--ink);outline:none}
-  input[type=search]{flex:1;min-width:200px}
+  select,input[type=search]{font:inherit;font-size:15.5px;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:8px 12px;color:var(--ink);outline:none}
+  input[type=search]{flex:1;min-width:220px}
   .rng{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
-  .rng .lbl{font-size:14px;font-weight:600;color:var(--ink2)}
-  input[type=date]{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:7px 10px;color:var(--ink)}
+  .rng .lbl{font-size:15.5px;font-weight:600;color:var(--ink2)}
 
-  .ghead{display:flex;align-items:baseline;gap:10px;padding:18px 4px 8px;border-bottom:1.5px solid var(--ink);margin-top:14px}
-  .ghead .d{font-size:18px;font-weight:700}
-  .ghead .today{font-size:12.5px;font-weight:800;color:var(--hi);letter-spacing:.06em}
-  .ghead .n{margin-left:auto;font-size:13px;color:var(--ink3)}
+  .ghead{display:flex;align-items:baseline;gap:10px;padding:20px 4px 8px;border-bottom:1.5px solid var(--ink);margin-top:14px}
+  .ghead .d{font-size:21px;font-weight:700}
+  .ghead .today{font-size:14px;font-weight:800;color:var(--hi);letter-spacing:.06em}
+  .ghead .n{margin-left:auto;font-size:15px;color:var(--ink3)}
   .toc{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:10px}
   .it{border-bottom:1px solid var(--line2)}
   .it:last-child{border-bottom:0}
-  .it > summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:14px;padding:13px 18px}
+  .it > summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:14px;padding:14px 18px}
   .it > summary::-webkit-details-marker{display:none}
   .it > summary:hover,.it[open] > summary{background:#f8fafb}
-  .tm{width:110px;flex:none;font-size:14px;color:var(--ink2);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .tm{width:120px;flex:none;font-size:16px;color:var(--ink2);font-variant-numeric:tabular-nums;white-space:nowrap}
   .tm.na{color:#b5bbc1}
-  .lv{flex:none;min-width:26px;text-align:center;font-size:12.5px;font-weight:700;color:#fff;border-radius:6px;padding:3px 6px;background:var(--na)}
+  .lv{flex:none;min-width:30px;text-align:center;font-size:14px;font-weight:700;color:#fff;border-radius:6px;padding:3px 7px;background:var(--na)}
   .lv.상{background:var(--hi)} .lv.중{background:var(--mid)} .lv.하{background:var(--lo)}
-  .cat{flex:none;font-size:12.5px;color:var(--ink2);background:var(--line2);border-radius:6px;padding:2px 8px;white-space:nowrap}
+  .cat{flex:none;font-size:14px;color:var(--ink2);background:var(--line2);border-radius:6px;padding:3px 9px;white-space:nowrap}
   .mid{flex:1;min-width:0}
-  .nt{font-size:16px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .sub{margin-top:3px;font-size:13.5px;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .sub .sp{color:#cdd2d7;margin:0 5px}
+  .nt{font-size:19px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .sub{margin-top:4px;font-size:16px;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .sub .sp{color:#cdd2d7;margin:0 6px}
   .team{color:var(--ink3)}
-  .hb{flex:none;font-size:13px;font-weight:600;color:var(--accent);white-space:nowrap}
+  .hb{flex:none;font-size:15px;font-weight:600;color:var(--accent);white-space:nowrap}
   .hb.zero{color:var(--ink3);font-weight:500}
-  .chev{flex:none;font-size:11px;color:var(--ink3)}
+  .chev{flex:none;font-size:12px;color:var(--ink3)}
   .it[open] .chev{transform:rotate(180deg)}
-  .bd{padding:4px 18px 16px 140px;background:#f8fafb;font-size:14px;color:var(--ink2)}
+  .bd{padding:6px 20px 18px 150px;background:#f8fafb;font-size:16.5px;color:var(--ink2)}
   .bd .memo{margin-top:4px}
-  .bd dl{display:grid;grid-template-columns:72px 1fr;gap:6px 12px;margin:10px 0 0}
-  .bd dt{font-size:12.5px;font-weight:600;color:var(--ink3)}
+  .bd dl{display:grid;grid-template-columns:76px 1fr;gap:6px 12px;margin:10px 0 0}
+  .bd dt{font-size:14px;font-weight:600;color:var(--ink3)}
   .bd dd{margin:0}
-  .aig{margin-top:12px;background:#f4f1fd;border:1px solid #e4ddf8;border-radius:8px;padding:8px 10px;font-size:13.5px;color:var(--ink);line-height:1.6}
-  .hist{margin-top:10px;background:#eef6f3;border:1px solid #dcece6;border-radius:8px;padding:8px 10px;font-size:13.5px;color:var(--ink);line-height:1.6}
-  .hist .hls{margin-top:4px;display:grid;gap:2px}
-  .golink{display:inline-block;margin-top:14px;font-size:14px;font-weight:600;color:#fff;background:var(--ink);border-radius:8px;padding:7px 13px;text-decoration:none}
+  .aig{margin-top:12px;background:#f4f1fd;border:1px solid #e4ddf8;border-radius:8px;padding:9px 12px;font-size:16px;color:var(--ink);line-height:1.6}
+  .hist{margin-top:10px;background:#eef6f3;border:1px solid #dcece6;border-radius:8px;padding:9px 12px;font-size:16px;color:var(--ink);line-height:1.6}
+  .hist .hls{margin-top:5px;display:grid;gap:3px}
+  .golink{display:inline-block;margin-top:14px;font-size:16px;font-weight:600;color:#fff;background:var(--ink);border-radius:8px;padding:8px 14px;text-decoration:none}
   .golink:hover{background:#000}
 
   .cal-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
-  .cal-head button{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--card);border-radius:8px;padding:6px 12px;cursor:pointer}
-  .cal-head .mt{font-size:20px;font-weight:600;margin-left:6px}
+  .cal-head button{font:inherit;font-size:16px;border:1px solid var(--line);background:var(--card);border-radius:8px;padding:7px 13px;cursor:pointer}
+  .cal-head .mt{font-size:22px;font-weight:600;margin-left:6px}
   .cal{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
   .cal .wk7{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
-  .cal .wh{font-size:12px;font-weight:600;color:var(--ink3);text-align:center;padding:8px 0;border-bottom:1px solid var(--line)}
+  .cal .wh{font-size:14px;font-weight:600;color:var(--ink3);text-align:center;padding:9px 0;border-bottom:1px solid var(--line)}
   .wkrow{position:relative}
   .days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
-  .day{min-height:132px;border-right:1px solid var(--line2);border-bottom:1px solid var(--line2);padding:5px 6px;min-width:0}
+  .day{min-height:140px;border-right:1px solid var(--line2);border-bottom:1px solid var(--line2);padding:5px 6px;min-width:0}
   .day:nth-child(7n){border-right:0}
   .day.out{background:#fafbfb}
   .day.out .dn span{color:#c2c7cc}
-  .dn{display:flex;align-items:center;justify-content:space-between;font-size:12.5px;font-weight:500;height:24px}
-  .dn span{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%}
+  .dn{display:flex;align-items:center;justify-content:space-between;font-size:14px;font-weight:500;height:26px}
+  .dn span{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%}
   .dn span.tday{background:var(--accent);color:#fff;font-weight:700}
-  .dn .more{font-size:11.5px;color:var(--ink3);width:auto;height:auto;border-radius:0}
-  .bars{position:absolute;left:0;right:0;top:30px;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));grid-auto-rows:22px;row-gap:4px;padding:0 3px;pointer-events:none}
-  .bars .bar{pointer-events:auto;cursor:pointer;border:0;text-align:left;font:inherit;font-size:12.5px;font-weight:600;color:#fff;padding:0 8px;height:22px;line-height:22px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-radius:5px;margin:0 2px;background:var(--na)}
+  .dn .more{font-size:13px;color:var(--ink3);width:auto;height:auto;border-radius:0}
+  .bars{position:absolute;left:0;right:0;top:32px;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));grid-auto-rows:24px;row-gap:4px;padding:0 3px;pointer-events:none}
+  .bars .bar{pointer-events:auto;cursor:pointer;border:0;text-align:left;font:inherit;font-size:14px;font-weight:600;color:#fff;padding:0 9px;height:24px;line-height:24px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-radius:6px;margin:0 2px;background:var(--na)}
   .bars .bar.h{background:var(--hi)} .bars .bar.m{background:var(--mid)} .bars .bar.l{background:var(--lo)} .bars .bar.x{background:var(--na)}
   .bars .bar.cl{border-top-left-radius:0;border-bottom-left-radius:0;margin-left:0}
   .bars .bar.cr{border-top-right-radius:0;border-bottom-right-radius:0;margin-right:0}
@@ -107,27 +102,27 @@
 
   .ovl{position:fixed;inset:0;background:rgba(20,24,28,.38);display:none;align-items:center;justify-content:center;padding:16px;z-index:50}
   .ovl.show{display:flex}
-  .pop{position:relative;width:100%;max-width:480px;max-height:86vh;overflow:auto;background:#fff;border-radius:14px;box-shadow:0 18px 50px rgba(0,0,0,.22);padding:22px 22px 20px}
-  .pclose{position:absolute;top:10px;right:10px;width:34px;height:34px;border:0;border-radius:50%;background:none;font-size:20px;color:var(--ink3);cursor:pointer}
+  .pop{position:relative;width:100%;max-width:520px;max-height:86vh;overflow:auto;background:#fff;border-radius:14px;box-shadow:0 18px 50px rgba(0,0,0,.22);padding:24px 24px 22px}
+  .pclose{position:absolute;top:10px;right:10px;width:36px;height:36px;border:0;border-radius:50%;background:none;font-size:22px;color:var(--ink3);cursor:pointer}
   .pclose:hover{background:var(--line2);color:var(--ink)}
   .ptags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;padding-right:30px}
-  .pop h3{margin:0;font-size:18px;font-weight:700;letter-spacing:-.01em;line-height:1.4}
-  .pop .when{margin-top:10px;font-size:14px;color:var(--ink2)}
-  .pop dl{display:grid;grid-template-columns:58px 1fr;gap:7px 12px;margin:14px 0 0;font-size:14px;color:var(--ink2)}
-  .pop dt{font-size:12.5px;font-weight:600;color:var(--ink3)}
+  .pop h3{margin:0;font-size:22px;font-weight:700;letter-spacing:-.01em;line-height:1.4}
+  .pop .when{margin-top:10px;font-size:16px;color:var(--ink2)}
+  .pop dl{display:grid;grid-template-columns:64px 1fr;gap:8px 12px;margin:14px 0 0;font-size:16px;color:var(--ink2)}
+  .pop dt{font-size:14px;font-weight:600;color:var(--ink3)}
   .pop dd{margin:0}
-  .pop .note{margin:12px 0 0;font-size:14px;color:var(--ink2)}
+  .pop .note{margin:12px 0 0;font-size:16px;color:var(--ink2)}
   .empty{padding:50px 0;text-align:center;color:var(--ink3)}
-  footer{margin-top:36px;font-size:13px;color:var(--ink3);text-align:right}
+  footer{margin-top:36px;font-size:14.5px;color:var(--ink3);text-align:right}
   @media (max-width:640px){
     .wrap{padding:22px 12px 50px}
     .it > summary{flex-wrap:wrap;gap:6px 10px}
     .tm{width:auto}
     .mid{flex-basis:100%;order:9}
     .hb{order:2}
-    .bd{padding:4px 14px 14px}
-    .day{min-height:86px;padding:3px}
-    .bars{top:28px;grid-auto-rows:18px}
+    .bd{padding:6px 14px 14px}
+    .day{min-height:90px;padding:3px}
+    .bars{top:30px;grid-auto-rows:18px}
     .bars .bar{font-size:0;height:18px;line-height:18px;padding:0}
   }
 </style>
@@ -142,17 +137,10 @@
       <a href="https://www.amc.seoul.kr/asan/academy/event/eventList.do" target="_blank" rel="noopener">학술행사</a>
       <a href="http://asannet.amc.kr/" target="_blank" rel="noopener">아산넷</a>
       <a href="http://asannet.amc.kr/egate45/sel/eip/home/home.nsf/openpage?readform&amp;applcode=od0300" target="_blank" rel="noopener">전화번호부</a>
-
     </div>
   </header>
 
-  <section class="stats">
-    <div class="sumtop"><span class="lb">전체</span><span class="tt" id="total">0</span><span class="lb">건</span></div>
-    <div class="bar" id="barBox"></div>
-    <div class="legend" id="legend"></div>
-  </section>
-
-  <div class="toolbar"><div class="seg" id="gradeSeg"></div></div>
+  <div class="toolbar" id="gradeSeg"></div>
   <div class="toolbar">
     <div class="seg" id="viewSeg">
       <button class="on" data-v="list">목록</button>
@@ -214,23 +202,30 @@ function parse(md){
 function dates(s){
   return [...(s||'').matchAll(/(\d{4})-(\d{2})-(\d{2})/g)].map(m => new Date(+m[1], +m[2]-1, +m[3]));
 }
+// 시작일과 종료일 (종료일 칸이 있으면 그것을 사용)
+function spanOf(r){
+  const ds = dates(r['행사일']);
+  if(!ds.length) return null;
+  const st = ds[0];
+  let en = ds[ds.length-1];
+  const e = dates(r['종료일'])[0];
+  if(e && e >= st) en = e;
+  return {st, en};
+}
 const gradeOf = r => (r['사보 중요도']||'').trim() || '미표기';
 const topicOf = r => (r['주제별']||'').trim() || '미지정';
 const histCount = r => (r['게재 호수·코너·기사 제목']||'').split(/\s*\|\s*/).filter(x=>/호/.test(x)).length;
 const gcls = r => { const g = gradeOf(r); return g==='상'?'h':g==='중'?'m':g==='하'?'l':'x'; };
 
-// 비고에서 행사시간 (없으면 빈 문자열)
 function timeOf(r){
   const m = (r['비고(공개 가능)']||'').match(TIME_RE);
   return m ? m[0].replace(/\s+/g,'') : '';
 }
-// 비고에서 장소 조각 찾기
 function placeOf(r){
   const parts = (r['비고(공개 가능)']||'').split(/\s*·\s*/);
   const p = parts.find(x => PLACE_RE.test(x) && !TIME_RE.test(x) && !SKIP_RE.test(x));
   return p ? p.replace(/^(\d{1,2}:\d{2}[^ ]*\s*)/,'').trim() : '';
 }
-// "(부서) (유닛) 이름 직급" → "이름 직급 (부서 유닛)"
 function fmtPerson(s){
   s = (s||'').trim(); if(!s) return '';
   if(s.includes(' / ')) return esc(s);
@@ -252,10 +247,12 @@ function personsOf(r){
     .map(v => (v||'').trim()).filter((v,i,a) => v && a.indexOf(v)===i);
   return list.map(fmtPerson).join(' / ');
 }
+// 병원보 이력: 각 줄의 '몇 호'를 굵게
 function histHTML(r){
   const lines = (r['게재 호수·코너·기사 제목']||'').split(/\s*\|\s*/).filter(Boolean);
   if(!r['사보 이력 비교'] && !lines.length) return '';
-  return `<div class="hist"><b>병원보 이력</b>${r['사보 이력 비교'] ? ' · ' + esc(r['사보 이력 비교']) : ''}${lines.length ? '<div class="hls">' + lines.map(x => `<div>${esc(x)}</div>`).join('') + '</div>' : ''}</div>`;
+  const fmt = x => esc(x).replace(/^(\d+호)/, '<b>$1</b>');
+  return `<div class="hist"><b>병원보 이력</b>${r['사보 이력 비교'] ? ' · ' + esc(r['사보 이력 비교']) : ''}${lines.length ? '<div class="hls">' + lines.map(x => `<div>${fmt(x)}</div>`).join('') + '</div>' : ''}</div>`;
 }
 function aiHTML(r){
   return r['AI 가이드'] ? `<div class="aig"><b>AI 가이드</b><br>${esc(r['AI 가이드']).replace(/ \/ /g,'<br>')}</div>` : '';
@@ -265,10 +262,10 @@ function linkOf(r){
 }
 
 function inPreset(r){
-  const ds = dates(r['행사일']);
+  const sp = spanOf(r);
   if(preset==='all') return true;
-  if(!ds.length) return false;
-  const start = ds[0], end = ds[ds.length-1];
+  if(!sp) return false;
+  const {st:start, en:end} = sp;
   const wStart = new Date(TODAY); wStart.setDate(TODAY.getDate()-((TODAY.getDay()+6)%7));
   const wEnd = new Date(wStart); wEnd.setDate(wStart.getDate()+6);
   const mStart = new Date(TODAY.getFullYear(), TODAY.getMonth(), 1);
@@ -287,35 +284,30 @@ function passes(r){
   return inPreset(r);
 }
 
+// 상·중·하·미표기 버튼: 누르면 그 중요도만, 같은 버튼을 다시 누르면 전체
 function buildControls(){
-  const g = document.getElementById('gradeSeg');
-  g.innerHTML = ['all',...GRADES].map(k =>
-    `<button data-g="${k}" class="${k===grade?'on':''}">${k==='all'?'전체':k} <span class="n" data-n="${k}"></span></button>`).join('');
-  g.querySelectorAll('button').forEach(b => b.onclick = () => { grade = b.dataset.g; buildControls(); render(); });
+  document.getElementById('gradeSeg').innerHTML = GRADES.map(k => {
+    const n = rows.filter(r => gradeOf(r)===k).length;
+    return `<button class="gp ${grade===k?'on':''}" data-g="${k}" style="--c:${COLORS[k]}">${k} <span>${n}</span></button>`;
+  }).join('') + `<span class="gnote">${grade==='all' ? '버튼을 누르면 해당 중요도만 보입니다' : '같은 버튼을 다시 누르면 전체 보기'}</span>`;
+  document.querySelectorAll('#gradeSeg .gp').forEach(b => b.onclick = () => {
+    grade = grade === b.dataset.g ? 'all' : b.dataset.g;
+    buildControls(); render();
+  });
 
   const cats = [...new Set(rows.map(r=>r['행사 분류']).filter(Boolean))].sort();
+  const curCat = catSel.value;
   catSel.innerHTML = '<option value="all">모든 분류</option>' + cats.map(c=>`<option>${esc(c)}</option>`).join('');
+  catSel.value = cats.includes(curCat) ? curCat : 'all';
   topicSel.innerHTML = '<option value="all">모든 주제</option>' + ['병원','연구원','재단'].map(t=>`<option>${t}</option>`).join('');
-
-  const counts = {};
-  GRADES.forEach(k => counts[k] = rows.filter(r=>gradeOf(r)===k).length);
-  document.querySelectorAll('[data-n]').forEach(s => {
-    const k = s.dataset.n;
-    s.textContent = k==='all' ? rows.length : (counts[k]||0);
-  });
-  document.getElementById('total').textContent = rows.length;
-  document.getElementById('barBox').innerHTML = GRADES.map(k =>
-    counts[k] ? `<span style="flex:${counts[k]};background:${COLORS[k]}"></span>` : '').join('');
-  document.getElementById('legend').innerHTML = GRADES.map(k =>
-    `<span><i style="background:${COLORS[k]}"></i>${k} ${counts[k]||0}건</span>`).join('');
 }
 
 function listHTML(items){
   if(!items.length) return '<div class="empty">조건에 맞는 행사가 없습니다.</div>';
   const groups = {};
   items.forEach(r => {
-    const d = dates(r['행사일'])[0];
-    const key = d ? ymd(d) : '날짜 미정';
+    const sp = spanOf(r);
+    const key = sp ? ymd(sp.st) : '날짜 미정';
     (groups[key] = groups[key] || []).push(r);
   });
   return Object.keys(groups).sort((a,b) => a==='날짜 미정' ? 1 : b==='날짜 미정' ? -1 : a.localeCompare(b)).map(k => {
@@ -373,8 +365,8 @@ function calHTML(items){
     const we = new Date(ws); we.setDate(ws.getDate()+6);
     const segs = [];
     items.forEach(r => {
-      const ds = dates(r['행사일']); if(!ds.length) return;
-      const st = ds[0], en = ds[ds.length-1];
+      const sp = spanOf(r); if(!sp) return;
+      const st = sp.st, en = sp.en;
       if(en < ws || st > we) return;
       segs.push({ r, s: st<ws ? 0 : st.getDay(), e: en>we ? 6 : en.getDay(), cl: st<ws, cr: en>we });
     });
@@ -399,7 +391,7 @@ function calHTML(items){
       return `<button type="button" class="${cls}" data-i="${rows.indexOf(x.r)}" style="grid-column:${x.s+1}/${x.e+2};grid-row:${x.lane+1}">${esc(x.r['행사명'])}</button>`;
     }).join('');
     const lanesUsed = Math.min(MAXLANE, laneEnd.length);
-    weeks += `<div class="wkrow" style="min-height:${34 + lanesUsed*26 + 6}px"><div class="days">${days}</div><div class="bars">${bars}</div></div>`;
+    weeks += `<div class="wkrow" style="min-height:${36 + lanesUsed*28 + 6}px"><div class="days">${days}</div><div class="bars">${bars}</div></div>`;
   }
   return head + `<div class="cal"><div class="wk7">${['일','월','화','수','목','금','토'].map(x=>`<div class="wh">${x}</div>`).join('')}</div>${weeks}</div>`;
 }
@@ -409,11 +401,12 @@ function openPop(i){
   const g = gradeOf(r);
   const t = timeOf(r), place = placeOf(r), persons = personsOf(r);
   const link = linkOf(r);
+  const endTxt = r['종료일'] ? ' ~ ' + r['종료일'] : '';
   document.getElementById('pop').innerHTML = `
     <button class="pclose" aria-label="닫기">×</button>
     <div class="ptags"><span class="lv ${g}">${g}</span><span class="cat">${esc(r['행사 분류']||'')}</span></div>
     <h3>${esc(r['행사명'])}</h3>
-    <div class="when">${esc(r['행사일']||'날짜 미정')}${t ? ' · ' + t : ''}</div>
+    <div class="when">${esc(r['행사일']||'날짜 미정')}${esc(endTxt)}${t ? ' · ' + t : ''}</div>
     <dl>
       ${place ? `<dt>장소</dt><dd>${esc(place)}</dd>` : ''}
       <dt>담당</dt><dd>${persons || '미기재'}</dd>
@@ -429,11 +422,12 @@ function closePop(){ document.getElementById('ovl').classList.remove('show'); }
 
 function render(){
   const items = rows.filter(passes).sort((a,b) => {
-    const da = dates(a['행사일'])[0], db = dates(b['행사일'])[0];
+    const da = spanOf(a)?.st, db = spanOf(b)?.st;
     if(!da && !db) return 0; if(!da) return 1; if(!db) return -1;
     return da - db;
   });
-  document.getElementById('meta').textContent = `표시 ${items.length}건 · 전체 ${rows.length}건 · 화면 갱신 ${new Date().toLocaleString('ko-KR')}`;
+  const gLabel = grade === 'all' ? '' : ` · ${grade} 보기`;
+  document.getElementById('meta').textContent = `표시 ${items.length}건 · 전체 ${rows.length}건${gLabel} · 화면 갱신 ${new Date().toLocaleString('ko-KR')}`;
   if(view==='list'){
     document.getElementById('list').style.display = '';
     document.getElementById('cal').style.display = 'none';
