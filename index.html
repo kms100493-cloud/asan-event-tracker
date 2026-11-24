@@ -57,22 +57,30 @@
   .it > summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:14px;padding:13px 18px}
   .it > summary::-webkit-details-marker{display:none}
   .it > summary:hover,.it[open] > summary{background:#f8fafb}
-  .tm{width:96px;flex:none;font-size:14px;color:var(--ink2);font-variant-numeric:tabular-nums}
+  .tm{width:110px;flex:none;font-size:14px;color:var(--ink2);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .tm.na{color:#b5bbc1}
   .lv{flex:none;min-width:26px;text-align:center;font-size:12.5px;font-weight:700;color:#fff;border-radius:6px;padding:3px 6px;background:var(--na)}
   .lv.상{background:var(--hi)} .lv.중{background:var(--mid)} .lv.하{background:var(--lo)}
   .cat{flex:none;font-size:12.5px;color:var(--ink2);background:var(--line2);border-radius:6px;padding:2px 8px;white-space:nowrap}
-  .nt{flex:1;min-width:0;font-size:16px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .hb{flex:none;font-size:13px;font-weight:600;color:var(--accent)}
+  .mid{flex:1;min-width:0}
+  .nt{font-size:16px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .sub{margin-top:3px;font-size:13.5px;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .sub .sp{color:#cdd2d7;margin:0 5px}
+  .team{color:var(--ink3)}
+  .hb{flex:none;font-size:13px;font-weight:600;color:var(--accent);white-space:nowrap}
   .hb.zero{color:var(--ink3);font-weight:500}
   .chev{flex:none;font-size:11px;color:var(--ink3)}
   .it[open] .chev{transform:rotate(180deg)}
-  .bd{padding:4px 18px 16px 136px;background:#f8fafb;font-size:14px;color:var(--ink2)}
-  .bd dl{display:grid;grid-template-columns:72px 1fr;gap:6px 12px;margin:8px 0 0}
+  .bd{padding:4px 18px 16px 140px;background:#f8fafb;font-size:14px;color:var(--ink2)}
+  .bd .memo{margin-top:4px}
+  .bd dl{display:grid;grid-template-columns:72px 1fr;gap:6px 12px;margin:10px 0 0}
   .bd dt{font-size:12.5px;font-weight:600;color:var(--ink3)}
   .bd dd{margin:0}
-  .bd a{color:var(--accent);font-weight:600}
-  .hist{margin-top:10px;background:#eef6f3;border:1px solid #dcece6;border-radius:8px;padding:8px 10px;font-size:13.5px;color:var(--ink)}
-  .aig{background:#f4f1fd;border:1px solid #e4ddf8;border-radius:8px;padding:8px 10px;font-size:13.5px;color:var(--ink);line-height:1.6}
+  .aig{margin-top:12px;background:#f4f1fd;border:1px solid #e4ddf8;border-radius:8px;padding:8px 10px;font-size:13.5px;color:var(--ink);line-height:1.6}
+  .hist{margin-top:10px;background:#eef6f3;border:1px solid #dcece6;border-radius:8px;padding:8px 10px;font-size:13.5px;color:var(--ink);line-height:1.6}
+  .hist .hls{margin-top:4px;display:grid;gap:2px}
+  .golink{display:inline-block;margin-top:14px;font-size:14px;font-weight:600;color:#fff;background:var(--ink);border-radius:8px;padding:7px 13px;text-decoration:none}
+  .golink:hover{background:#000}
 
   .cal-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
   .cal-head button{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--card);border-radius:8px;padding:6px 12px;cursor:pointer}
@@ -89,7 +97,7 @@
   .dn{display:flex;align-items:center;justify-content:space-between;font-size:12.5px;font-weight:500;height:24px}
   .dn span{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%}
   .dn span.tday{background:var(--accent);color:#fff;font-weight:700}
-  .dn .more{font-size:11.5px;color:var(--ink3)}
+  .dn .more{font-size:11.5px;color:var(--ink3);width:auto;height:auto;border-radius:0}
   .bars{position:absolute;left:0;right:0;top:30px;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));grid-auto-rows:22px;row-gap:4px;padding:0 3px;pointer-events:none}
   .bars .bar{pointer-events:auto;cursor:pointer;border:0;text-align:left;font:inherit;font-size:12.5px;font-weight:600;color:#fff;padding:0 8px;height:22px;line-height:22px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-radius:5px;margin:0 2px;background:var(--na)}
   .bars .bar.h{background:var(--hi)} .bars .bar.m{background:var(--mid)} .bars .bar.l{background:var(--lo)} .bars .bar.x{background:var(--na)}
@@ -109,16 +117,14 @@
   .pop dt{font-size:12.5px;font-weight:600;color:var(--ink3)}
   .pop dd{margin:0}
   .pop .note{margin:12px 0 0;font-size:14px;color:var(--ink2)}
-  .hbox{background:#eef6f3;border:1px solid #dcece6;border-radius:8px;padding:8px 10px;font-size:13.5px;color:var(--ink);margin-top:12px;line-height:1.6}
-  .go{display:inline-block;margin-top:16px;font-size:14px;font-weight:600;color:#fff;background:var(--ink);border-radius:8px;padding:8px 14px;text-decoration:none}
-  .go:hover{background:#000}
   .empty{padding:50px 0;text-align:center;color:var(--ink3)}
   footer{margin-top:36px;font-size:13px;color:var(--ink3);text-align:right}
   @media (max-width:640px){
     .wrap{padding:22px 12px 50px}
-    .tm{width:auto}
     .it > summary{flex-wrap:wrap;gap:6px 10px}
-    .nt{flex-basis:100%;white-space:normal}
+    .tm{width:auto}
+    .mid{flex-basis:100%;order:9}
+    .hb{order:2}
     .bd{padding:4px 14px 14px}
     .day{min-height:86px;padding:3px}
     .bars{top:28px;grid-auto-rows:18px}
@@ -156,7 +162,6 @@
   </div>
   <div class="rng">
     <span class="lbl">기간</span>
-    <input type="date" id="from"> <span>~</span> <input type="date" id="to">
     <div class="seg" id="preset">
       <button data-p="today" class="on">오늘부터</button>
       <button data-p="week">이번 주</button>
@@ -179,10 +184,14 @@ const SRC = 'data/events.md';
 const GRADES = ['상','중','하','미표기'];
 const COLORS = {상:'var(--hi)', 중:'var(--mid)', 하:'var(--lo)', 미표기:'var(--na)'};
 const MAXLANE = 4;
+const TIME_RE = /\d{1,2}:\d{2}(?:\s*[~-]\s*\d{1,2}:\d{2})?/;
+const PLACE_RE = /(관|실|홀|센터|강당|온라인|Zoom|지하|광장|구룡마을|연구원)/;
+const SKIP_RE = /주관|신청|대상|마감|사전|참여|문의|강사|주제|회차|까지|시리즈|등록|접수/;
+const POS = ['과장','차장','부장','대리','주임','사원','팀장','교수','간호사','수석부장','부실장','부원장','의국장','조교수','부교수','전문의','레지던트','임상강사','임상조교수','주임급','대리급','과장급','선임기능','센터장'];
+
 let rows = [], view = 'list', grade = 'all', preset = 'today', query = '';
-let calBase = null;
 const TODAY = new Date(); TODAY.setHours(0,0,0,0);
-calBase = new Date(TODAY.getFullYear(), TODAY.getMonth(), 1);
+let calBase = new Date(TODAY.getFullYear(), TODAY.getMonth(), 1);
 
 const pad = n => String(n).padStart(2,'0');
 const ymd = d => d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
@@ -207,6 +216,51 @@ const gradeOf = r => (r['사보 중요도']||'').trim() || '미표기';
 const topicOf = r => (r['주제별']||'').trim() || '미지정';
 const histCount = r => (r['게재 호수·코너·기사 제목']||'').split(/\s*\|\s*/).filter(x=>/호/.test(x)).length;
 const gcls = r => { const g = gradeOf(r); return g==='상'?'h':g==='중'?'m':g==='하'?'l':'x'; };
+
+// 비고에서 행사시간 (없으면 빈 문자열)
+function timeOf(r){
+  const m = (r['비고(공개 가능)']||'').match(TIME_RE);
+  return m ? m[0].replace(/\s+/g,'') : '';
+}
+// 비고에서 장소 조각 찾기
+function placeOf(r){
+  const parts = (r['비고(공개 가능)']||'').split(/\s*·\s*/);
+  const p = parts.find(x => PLACE_RE.test(x) && !TIME_RE.test(x) && !SKIP_RE.test(x));
+  return p ? p.replace(/^(\d{1,2}:\d{2}[^ ]*\s*)/,'').trim() : '';
+}
+// "(부서) (유닛) 이름 직급" → "이름 직급 (부서 유닛)"
+function fmtPerson(s){
+  s = (s||'').trim(); if(!s) return '';
+  if(s.includes(' / ')) return esc(s);
+  const paren = (s.match(/\((.*?)\)/)||[])[1] || '';
+  let main = s.replace(/\(.*?\)/g,'').replace(/\s+/g,' ').trim();
+  let t = main.split(' ');
+  let pos = '';
+  if(t.length>=2 && t[t.length-2]==='Unit' && t[t.length-1]==='Manager'){ pos = 'Unit Manager'; t = t.slice(0,-2); }
+  else if(POS.includes(t[t.length-1])){ pos = t.pop(); }
+  const name = t.length ? t.pop() : '';
+  const team = t.join(' ');
+  const head = [name, pos].filter(Boolean).join(' ');
+  let out = team ? `${esc(head)} <span class="team">(${esc(team)})</span>` : esc(head);
+  if(paren) out += ` <span class="team">· ${esc(paren)}</span>`;
+  return out;
+}
+function personsOf(r){
+  const list = [r['아산넷 등록자(게시글 올린 사람)'], r['행사 담당/문의(본문에 명시된 경우)']]
+    .map(v => (v||'').trim()).filter((v,i,a) => v && a.indexOf(v)===i);
+  return list.map(fmtPerson).join(' / ');
+}
+function histHTML(r){
+  const lines = (r['게재 호수·코너·기사 제목']||'').split(/\s*\|\s*/).filter(Boolean);
+  if(!r['사보 이력 비교'] && !lines.length) return '';
+  return `<div class="hist"><b>병원보 이력</b>${r['사보 이력 비교'] ? ' · ' + esc(r['사보 이력 비교']) : ''}${lines.length ? '<div class="hls">' + lines.map(x => `<div>${esc(x)}</div>`).join('') + '</div>' : ''}</div>`;
+}
+function aiHTML(r){
+  return r['AI 가이드'] ? `<div class="aig"><b>AI 가이드</b><br>${esc(r['AI 가이드']).replace(/ \/ /g,'<br>')}</div>` : '';
+}
+function linkOf(r){
+  return /^https?:/.test(r['출처 링크']||'') ? r['출처 링크'] : '';
+}
 
 function inPreset(r){
   const ds = dates(r['행사일']);
@@ -269,26 +323,31 @@ function listHTML(items){
     const head = `<div class="ghead"><span class="d">${k==='날짜 미정'?k:k.slice(5).replace('-','/')+' '+wd}</span>${today}<span class="n">${groups[k].length}건</span></div>`;
     const body = '<div class="toc">' + groups[k].map(r => {
       const g = gradeOf(r), h = histCount(r);
-      const who = [r['아산넷 등록자(게시글 올린 사람)'], r['행사 담당/문의(본문에 명시된 경우)']].filter(Boolean).map(esc).join(' · ') || '미기재';
-      const link = /^https?:/.test(r['출처 링크']||'') ? `<a href="${esc(r['출처 링크'])}" target="_blank" rel="noopener">원문 보기 →</a>` : '';
+      const t = timeOf(r);
+      const place = placeOf(r);
+      const persons = personsOf(r);
+      const sub = [place, persons].filter(Boolean).join('<span class="sp">·</span>') || '장소·담당 미기재';
+      const link = linkOf(r);
       return `<details class="it">
         <summary>
-          <span class="tm">${esc((r['행사일']||'').replace(/^\d{4}-/,'').slice(0,20))}</span>
+          <span class="tm ${t?'':'na'}">${t || '시간 미정'}</span>
           <span class="lv ${g}">${g}</span>
           <span class="cat">${esc(r['행사 분류']||'')}</span>
-          <span class="nt">${esc(r['행사명'])}</span>
+          <span class="mid">
+            <div class="nt">${esc(r['행사명'])}</div>
+            <div class="sub">${sub}</div>
+          </span>
           <span class="hb ${h?'':'zero'}">${h?'이력 '+h+'건':'이력 없음'}</span>
           <span class="chev">▼</span>
         </summary>
         <div class="bd">
-          ${r['비고(공개 가능)'] ? `<div>${esc(r['비고(공개 가능)'])}</div>` : ''}
+          ${r['비고(공개 가능)'] ? `<div class="memo">${esc(r['비고(공개 가능)'])}</div>` : ''}
           <dl>
-            <dt>담당</dt><dd>${who}</dd>
             <dt>주제</dt><dd>${esc(topicOf(r))}</dd>
-            <dt>링크</dt><dd>${link || '-'}</dd>
           </dl>
-          ${r['사보 이력 비교'] ? `<div class="hist"><b>병원보 이력</b> · ${esc(r['사보 이력 비교'])}${r['게재 호수·코너·기사 제목'] ? '<br>' + esc(r['게재 호수·코너·기사 제목']) : ''}</div>` : ''}
-          ${r['AI 가이드'] ? `<div class="aig" style="margin-top:10px"><b>AI 가이드</b><br>${esc(r['AI 가이드']).replace(/ \/ /g,'<br>')}</div>` : ''}
+          ${aiHTML(r)}
+          ${histHTML(r)}
+          ${link ? `<a class="golink" href="${esc(link)}" target="_blank" rel="noopener">원문 보기 →</a>` : ''}
         </div>
       </details>`;
     }).join('') + '</div>';
@@ -346,19 +405,22 @@ function calHTML(items){
 function openPop(i){
   const r = rows[i]; if(!r) return;
   const g = gradeOf(r);
-  const who = [r['아산넷 등록자(게시글 올린 사람)'], r['행사 담당/문의(본문에 명시된 경우)']].filter(Boolean).map(esc).join(' · ') || '미기재';
-  const link = /^https?:/.test(r['출처 링크']||'') ? `<a class="go" href="${esc(r['출처 링크'])}" target="_blank" rel="noopener">원문 보기 →</a>` : '';
-  const hist = r['사보 이력 비교'] ? `<div class="hbox"><b>병원보 이력</b> · ${esc(r['사보 이력 비교'])}${r['게재 호수·코너·기사 제목'] ? '<br>' + esc(r['게재 호수·코너·기사 제목']) : ''}</div>` : '';
-  const ai = r['AI 가이드'] ? `<div class="aig" style="margin-top:12px"><b>AI 가이드</b><br>${esc(r['AI 가이드']).replace(/ \/ /g,'<br>')}</div>` : '';
+  const t = timeOf(r), place = placeOf(r), persons = personsOf(r);
+  const link = linkOf(r);
   document.getElementById('pop').innerHTML = `
     <button class="pclose" aria-label="닫기">×</button>
     <div class="ptags"><span class="lv ${g}">${g}</span><span class="cat">${esc(r['행사 분류']||'')}</span></div>
     <h3>${esc(r['행사명'])}</h3>
-    <div class="when">${esc(r['행사일']||'날짜 미정')}</div>
-    <dl><dt>담당</dt><dd>${who}</dd><dt>주제</dt><dd>${esc(topicOf(r))}</dd></dl>
+    <div class="when">${esc(r['행사일']||'날짜 미정')}${t ? ' · ' + t : ''}</div>
+    <dl>
+      ${place ? `<dt>장소</dt><dd>${esc(place)}</dd>` : ''}
+      <dt>담당</dt><dd>${persons || '미기재'}</dd>
+      <dt>주제</dt><dd>${esc(topicOf(r))}</dd>
+    </dl>
     ${r['비고(공개 가능)'] ? `<p class="note">${esc(r['비고(공개 가능)'])}</p>` : ''}
-    ${hist}${ai}
-    ${link}`;
+    ${aiHTML(r)}
+    ${histHTML(r)}
+    ${link ? `<a class="golink" href="${esc(link)}" target="_blank" rel="noopener">원문 보기 →</a>` : ''}`;
   document.getElementById('ovl').classList.add('show');
 }
 function closePop(){ document.getElementById('ovl').classList.remove('show'); }
