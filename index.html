@@ -134,6 +134,7 @@
   .pop .bd{padding:0}
   .empty{padding:50px 0;text-align:center;color:var(--ink3)}
   footer{margin-top:36px;font-size:14.5px;color:var(--ink3);text-align:right}
+
   @media (max-width:640px){
     .wrap{padding:22px 12px 50px}
     .tm{width:auto}
@@ -153,7 +154,7 @@
     .topline{font-size:13px}
     .explain{font-size:13.5px}
     .gp{font-size:14px;padding:7px 13px}
-    .lbl,.seg button,.calbtn{font-size:13.5px}
+    .lbl,.seg button{font-size:13.5px}
     select,input[type=date],input[type=search]{font-size:13.5px}
     .ghead .d{font-size:17px}
     .ghead .wd,.ghead .n{font-size:13px}
@@ -185,6 +186,29 @@
     .pop h3{font-size:18px}
     .pop .ir{font-size:13.5px}
     footer{font-size:12.5px}
+  }
+
+  /* ===== 모바일 한 줄 배치 ===== */
+  .calbtn.mob{display:none}
+  @media (max-width:640px){
+    .card{padding:14px 12px}
+    .pills{flex-wrap:nowrap;gap:4px}
+    .gp{flex:1 1 0;min-width:0;justify-content:center;padding:6px 2px;gap:3px;font-size:12.5px;letter-spacing:-.06em;white-space:nowrap}
+    .gp i{width:6px;height:6px}
+    .gp b{letter-spacing:-.06em}
+    .stack{margin-top:12px}
+    .row{gap:6px;margin-top:12px}
+    .lbl{font-size:13px;letter-spacing:-.06em}
+    input[type=date]{font-size:12.5px;padding:7px 6px;letter-spacing:-.06em;flex:1 1 0;min-width:0}
+    .tilde{font-size:13px}
+    #preset{display:flex;width:100%}
+    #preset button{flex:1 1 0;min-width:0;padding:6px 2px;font-size:12px;letter-spacing:-.06em;white-space:nowrap}
+    .calbtn.desk{display:none}
+    .row:has(#topicSel){display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+    select{font-size:12px;letter-spacing:-.06em;padding:7px 4px;min-width:0;width:100%}
+    .search{grid-column:1 / span 2;min-width:0}
+    .search input{font-size:12.5px;letter-spacing:-.04em;padding:8px 9px}
+    .calbtn.mob{display:block;grid-column:3;margin:0;font-size:12.5px;letter-spacing:-.06em;padding:8px 4px;text-align:center}
   }
 </style>
 </head>
@@ -220,13 +244,14 @@
         <button data-p="past">지난 행사</button>
         <button data-p="all">전체</button>
       </div>
-      <button class="calbtn" id="viewBtn" type="button">캘린더</button>
+      <button class="calbtn desk" id="viewBtn" type="button">캘린더</button>
     </div>
     <div class="row">
       <select id="topicSel"><option value="all">모든 주제</option><option>병원</option><option>연구원</option><option>재단</option></select>
       <select id="catSel"><option value="all">모든 분류</option></select>
       <select id="histSel"><option value="all">병원보 전체</option><option value="has">이력 있음</option><option value="none">이력 없음</option></select>
       <div class="search"><input type="search" id="q" placeholder="행사명·장소·담당자·병원보 기사 제목 검색"></div>
+      <button class="calbtn mob" type="button">캘린더</button>
     </div>
   </section>
 
@@ -491,7 +516,7 @@ function render(){
   const isList = view === 'list';
   document.getElementById('list').style.display = isList ? '' : 'none';
   document.getElementById('cal').style.display = isList ? 'none' : '';
-  document.getElementById('viewBtn').textContent = isList ? '캘린더' : '목록';
+  document.querySelectorAll('.calbtn').forEach(b => b.textContent = isList ? '캘린더' : '목록');
   if(isList){
     document.getElementById('list').innerHTML = listHTML(items);
   } else {
@@ -507,7 +532,7 @@ const topicSel = document.getElementById('topicSel');
 const histSel = document.getElementById('histSel');
 [catSel, topicSel, histSel, document.getElementById('from'), document.getElementById('to')].forEach(el => el.onchange = render);
 document.getElementById('q').oninput = e => { query = e.target.value.trim().toLowerCase(); render(); };
-document.getElementById('viewBtn').onclick = () => { view = view === 'list' ? 'cal' : 'list'; render(); };
+document.querySelectorAll('.calbtn').forEach(b => b.onclick = () => { view = view === 'list' ? 'cal' : 'list'; render(); });
 document.getElementById('explBtn').onclick = () => {
   const ex = document.getElementById('explain'); ex.hidden = !ex.hidden;
   document.getElementById('explBtn').textContent = ex.hidden ? '설명 ▾' : '설명 ▴';
