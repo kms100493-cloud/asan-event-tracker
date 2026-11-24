@@ -42,6 +42,11 @@
   .rng{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
   .rng .lbl{font-size:15.5px;font-weight:600;color:var(--ink2)}
 
+  .tbadge{display:inline-flex;align-items:center;gap:5px;flex:none;font-size:14px;font-weight:600;color:#2f5f56;background:#eaf4f1;border-radius:999px;padding:3px 10px 3px 7px;white-space:nowrap}
+  .tbadge svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .tbadge.재단{color:#7a5a12;background:#fbf3df}
+  .tbadge.연구원{color:#5a40bf;background:#efebfb}
+
   .ghead{display:flex;align-items:baseline;gap:10px;padding:20px 4px 8px;border-bottom:1.5px solid var(--ink);margin-top:14px}
   .ghead .d{font-size:21px;font-weight:700}
   .ghead .today{font-size:14px;font-weight:800;color:var(--hi);letter-spacing:.06em}
@@ -56,7 +61,6 @@
   .tm.na{color:#b5bbc1}
   .lv{flex:none;min-width:30px;text-align:center;font-size:14px;font-weight:700;color:#fff;border-radius:6px;padding:3px 7px;background:var(--na)}
   .lv.상{background:var(--hi)} .lv.중{background:var(--mid)} .lv.하{background:var(--lo)}
-  .cat{flex:none;font-size:14px;color:var(--ink2);background:var(--line2);border-radius:6px;padding:3px 9px;white-space:nowrap}
   .mid{flex:1;min-width:0}
   .nt{font-size:19px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .sub{margin-top:4px;font-size:16px;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -68,14 +72,14 @@
   .it[open] .chev{transform:rotate(180deg)}
   .bd{padding:6px 20px 18px 150px;background:#f8fafb;font-size:16.5px;color:var(--ink2)}
   .bd .memo{margin-top:4px}
-  .bd dl{display:grid;grid-template-columns:76px 1fr;gap:6px 12px;margin:10px 0 0}
-  .bd dt{font-size:14px;font-weight:600;color:var(--ink3)}
-  .bd dd{margin:0}
   .aig{margin-top:12px;background:#f4f1fd;border:1px solid #e4ddf8;border-radius:8px;padding:9px 12px;font-size:16px;color:var(--ink);line-height:1.6}
-  .hist{margin-top:10px;background:#eef6f3;border:1px solid #dcece6;border-radius:8px;padding:9px 12px;font-size:16px;color:var(--ink);line-height:1.6}
-  .hist .hls{margin-top:5px;display:grid;gap:3px}
-  .golink{display:inline-block;margin-top:14px;font-size:16px;font-weight:600;color:#fff;background:var(--ink);border-radius:8px;padding:8px 14px;text-decoration:none}
-  .golink:hover{background:#000}
+  .hist{margin-top:10px;background:#eef6f3;border:1px solid #dcece6;border-radius:8px;padding:10px 12px;font-size:16px;color:var(--ink);line-height:1.6}
+  .hhead{display:flex;align-items:center;gap:9px;font-weight:700;font-size:16.5px}
+  .hcnt{background:var(--accent);color:#fff;border-radius:999px;padding:2px 11px;font-size:15px;font-weight:700}
+  .hnote{margin-top:4px;font-size:14.5px;color:var(--ink3)}
+  .hls{margin-top:6px;display:grid;gap:3px}
+  .golink{display:inline-block;margin-top:14px;font-size:16px;font-weight:600;color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+  .golink:hover{color:#06342c}
 
   .cal-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
   .cal-head button{font:inherit;font-size:16px;border:1px solid var(--line);background:var(--card);border-radius:8px;padding:7px 13px;cursor:pointer}
@@ -105,13 +109,14 @@
   .pop{position:relative;width:100%;max-width:520px;max-height:86vh;overflow:auto;background:#fff;border-radius:14px;box-shadow:0 18px 50px rgba(0,0,0,.22);padding:24px 24px 22px}
   .pclose{position:absolute;top:10px;right:10px;width:36px;height:36px;border:0;border-radius:50%;background:none;font-size:22px;color:var(--ink3);cursor:pointer}
   .pclose:hover{background:var(--line2);color:var(--ink)}
-  .ptags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;padding-right:30px}
+  .ptags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;padding-right:30px;align-items:center}
   .pop h3{margin:0;font-size:22px;font-weight:700;letter-spacing:-.01em;line-height:1.4}
-  .pop .when{margin-top:10px;font-size:16px;color:var(--ink2)}
-  .pop dl{display:grid;grid-template-columns:64px 1fr;gap:8px 12px;margin:14px 0 0;font-size:16px;color:var(--ink2)}
-  .pop dt{font-size:14px;font-weight:600;color:var(--ink3)}
-  .pop dd{margin:0}
-  .pop .note{margin:12px 0 0;font-size:16px;color:var(--ink2)}
+  .binfo{margin-top:16px;background:#f3f7f6;border-radius:12px;padding:12px 16px;display:grid;gap:8px}
+  .ir{display:grid;grid-template-columns:52px 1fr;gap:10px;font-size:16px;align-items:baseline}
+  .ir span{font-size:14px;font-weight:600;color:var(--ink3)}
+  .ir b{font-weight:600;color:var(--ink)}
+  .pop .note{margin:12px 0 0;font-size:15.5px;color:var(--ink2);line-height:1.6}
+  .pop .aig, .pop .hist{margin-top:12px}
   .empty{padding:50px 0;text-align:center;color:var(--ink3)}
   footer{margin-top:36px;font-size:14.5px;color:var(--ink3);text-align:right}
   @media (max-width:640px){
@@ -178,6 +183,11 @@ const TIME_RE = /\d{1,2}:\d{2}(?:\s*[~-]\s*\d{1,2}:\d{2})?/;
 const PLACE_RE = /(관|실|홀|센터|강당|온라인|Zoom|지하|광장|구룡마을|연구원)/;
 const SKIP_RE = /주관|신청|대상|마감|사전|참여|문의|강사|주제|회차|까지|시리즈|등록|접수/;
 const POS = ['과장','차장','부장','대리','주임','사원','팀장','교수','간호사','수석부장','부실장','부원장','의국장','조교수','부교수','전문의','레지던트','임상강사','임상조교수','주임급','대리급','과장급','선임기능','센터장'];
+const TOPIC_ICON = {
+  병원:'<svg viewBox="0 0 24 24"><path d="M4 20V9l8-5 8 5v11M9 20v-5h6v5M12 8v3M10.5 9.5h3"/></svg>',
+  재단:'<svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>',
+  연구원:'<svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3"/></svg>'
+};
 
 let rows = [], view = 'list', grade = 'all', preset = 'today', query = '';
 const TODAY = new Date(); TODAY.setHours(0,0,0,0);
@@ -202,7 +212,6 @@ function parse(md){
 function dates(s){
   return [...(s||'').matchAll(/(\d{4})-(\d{2})-(\d{2})/g)].map(m => new Date(+m[1], +m[2]-1, +m[3]));
 }
-// 시작일과 종료일 (종료일 칸이 있으면 그것을 사용)
 function spanOf(r){
   const ds = dates(r['행사일']);
   if(!ds.length) return null;
@@ -214,17 +223,23 @@ function spanOf(r){
 }
 const gradeOf = r => (r['사보 중요도']||'').trim() || '미표기';
 const topicOf = r => (r['주제별']||'').trim() || '미지정';
-const histCount = r => (r['게재 호수·코너·기사 제목']||'').split(/\s*\|\s*/).filter(x=>/호/.test(x)).length;
+const topicKey = r => ['병원','재단','연구원'].find(k => topicOf(r).includes(k)) || '';
+const histLines = r => (r['게재 호수·코너·기사 제목']||'').split(/\s*\|\s*/).filter(Boolean);
 const gcls = r => { const g = gradeOf(r); return g==='상'?'h':g==='중'?'m':g==='하'?'l':'x'; };
 
 function timeOf(r){
   const m = (r['비고(공개 가능)']||'').match(TIME_RE);
   return m ? m[0].replace(/\s+/g,'') : '';
 }
+function noteParts(r){ return (r['비고(공개 가능)']||'').split(/\s*·\s*/).filter(Boolean); }
 function placeOf(r){
-  const parts = (r['비고(공개 가능)']||'').split(/\s*·\s*/);
-  const p = parts.find(x => PLACE_RE.test(x) && !TIME_RE.test(x) && !SKIP_RE.test(x));
+  const p = noteParts(r).find(x => PLACE_RE.test(x) && !TIME_RE.test(x) && !SKIP_RE.test(x));
   return p ? p.replace(/^(\d{1,2}:\d{2}[^ ]*\s*)/,'').trim() : '';
+}
+// 비고에서 시간·장소를 뺀 나머지 (중복 방지)
+function remainNote(r){
+  const place = placeOf(r);
+  return noteParts(r).filter(x => !TIME_RE.test(x) && x !== place).join(' · ');
 }
 function fmtPerson(s){
   s = (s||'').trim(); if(!s) return '';
@@ -247,12 +262,19 @@ function personsOf(r){
     .map(v => (v||'').trim()).filter((v,i,a) => v && a.indexOf(v)===i);
   return list.map(fmtPerson).join(' / ');
 }
-// 병원보 이력: 각 줄의 '몇 호'를 굵게
+function topicBadge(r){
+  const k = topicKey(r);
+  return k ? `<span class="tbadge ${k}">${TOPIC_ICON[k]}${k}</span>` : '';
+}
 function histHTML(r){
-  const lines = (r['게재 호수·코너·기사 제목']||'').split(/\s*\|\s*/).filter(Boolean);
-  if(!r['사보 이력 비교'] && !lines.length) return '';
+  const lines = histLines(r);
+  if(!lines.length && !r['사보 이력 비교']) return '';
   const fmt = x => esc(x).replace(/^(\d+호)/, '<b>$1</b>');
-  return `<div class="hist"><b>병원보 이력</b>${r['사보 이력 비교'] ? ' · ' + esc(r['사보 이력 비교']) : ''}${lines.length ? '<div class="hls">' + lines.map(x => `<div>${fmt(x)}</div>`).join('') + '</div>' : ''}</div>`;
+  return `<div class="hist">
+    <div class="hhead"><span class="hcnt">${lines.length}건</span><span>병원보 이력</span></div>
+    ${r['사보 이력 비교'] ? `<div class="hnote">${esc(r['사보 이력 비교'])}</div>` : ''}
+    ${lines.length ? '<div class="hls">' + lines.map(x => `<div>${fmt(x)}</div>`).join('') + '</div>' : ''}
+  </div>`;
 }
 function aiHTML(r){
   return r['AI 가이드'] ? `<div class="aig"><b>AI 가이드</b><br>${esc(r['AI 가이드']).replace(/ \/ /g,'<br>')}</div>` : '';
@@ -284,7 +306,6 @@ function passes(r){
   return inPreset(r);
 }
 
-// 상·중·하·미표기 버튼: 누르면 그 중요도만, 같은 버튼을 다시 누르면 전체
 function buildControls(){
   document.getElementById('gradeSeg').innerHTML = GRADES.map(k => {
     const n = rows.filter(r => gradeOf(r)===k).length;
@@ -316,17 +337,18 @@ function listHTML(items){
     const today = d && +d===+TODAY ? '<span class="today">TODAY</span>' : '';
     const head = `<div class="ghead"><span class="d">${k==='날짜 미정'?k:k.slice(5).replace('-','/')+' '+wd}</span>${today}<span class="n">${groups[k].length}건</span></div>`;
     const body = '<div class="toc">' + groups[k].map(r => {
-      const g = gradeOf(r), h = histCount(r);
+      const g = gradeOf(r), h = histLines(r).length;
       const t = timeOf(r);
       const place = placeOf(r);
       const persons = personsOf(r);
       const sub = [place, persons].filter(Boolean).join('<span class="sp">·</span>') || '장소·담당 미기재';
       const link = linkOf(r);
+      const note = remainNote(r);
       return `<details class="it">
         <summary>
           <span class="tm ${t?'':'na'}">${t || '시간 미정'}</span>
           <span class="lv ${g}">${g}</span>
-          <span class="cat">${esc(r['행사 분류']||'')}</span>
+          ${topicBadge(r)}
           <span class="mid">
             <div class="nt">${esc(r['행사명'])}</div>
             <div class="sub">${sub}</div>
@@ -335,13 +357,10 @@ function listHTML(items){
           <span class="chev">▼</span>
         </summary>
         <div class="bd">
-          ${r['비고(공개 가능)'] ? `<div class="memo">${esc(r['비고(공개 가능)'])}</div>` : ''}
-          <dl>
-            <dt>주제</dt><dd>${esc(topicOf(r))}</dd>
-          </dl>
+          ${note ? `<div class="memo">${esc(note)}</div>` : ''}
           ${aiHTML(r)}
           ${histHTML(r)}
-          ${link ? `<a class="golink" href="${esc(link)}" target="_blank" rel="noopener">원문 보기 →</a>` : ''}
+          ${link ? `<a class="golink" href="${esc(link)}" target="_blank" rel="noopener">원문 보기</a>` : ''}
         </div>
       </details>`;
     }).join('') + '</div>';
@@ -401,21 +420,23 @@ function openPop(i){
   const g = gradeOf(r);
   const t = timeOf(r), place = placeOf(r), persons = personsOf(r);
   const link = linkOf(r);
-  const endTxt = r['종료일'] ? ' ~ ' + r['종료일'] : '';
+  const note = remainNote(r);
+  const dateTxt = (r['행사일']||'날짜 미정') + (r['종료일'] ? ' ~ ' + r['종료일'] : '');
+  const info = [
+    ['날짜', esc(dateTxt)],
+    t ? ['시간', esc(t)] : null,
+    place ? ['장소', esc(place)] : null,
+    persons ? ['담당', persons] : null
+  ].filter(Boolean);
   document.getElementById('pop').innerHTML = `
     <button class="pclose" aria-label="닫기">×</button>
-    <div class="ptags"><span class="lv ${g}">${g}</span><span class="cat">${esc(r['행사 분류']||'')}</span></div>
+    <div class="ptags"><span class="lv ${g}">${g}</span>${topicBadge(r)}</div>
     <h3>${esc(r['행사명'])}</h3>
-    <div class="when">${esc(r['행사일']||'날짜 미정')}${esc(endTxt)}${t ? ' · ' + t : ''}</div>
-    <dl>
-      ${place ? `<dt>장소</dt><dd>${esc(place)}</dd>` : ''}
-      <dt>담당</dt><dd>${persons || '미기재'}</dd>
-      <dt>주제</dt><dd>${esc(topicOf(r))}</dd>
-    </dl>
-    ${r['비고(공개 가능)'] ? `<p class="note">${esc(r['비고(공개 가능)'])}</p>` : ''}
+    <div class="binfo">${info.map(([k,v]) => `<div class="ir"><span>${k}</span><b>${v}</b></div>`).join('')}</div>
+    ${note ? `<p class="note">${esc(note)}</p>` : ''}
     ${aiHTML(r)}
     ${histHTML(r)}
-    ${link ? `<a class="golink" href="${esc(link)}" target="_blank" rel="noopener">원문 보기 →</a>` : ''}`;
+    ${link ? `<a class="golink" href="${esc(link)}" target="_blank" rel="noopener">원문 보기</a>` : ''}`;
   document.getElementById('ovl').classList.add('show');
 }
 function closePop(){ document.getElementById('ovl').classList.remove('show'); }
