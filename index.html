@@ -2,173 +2,334 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>오늘의 서울아산병원</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#fff;--fg:#191919;--mut:#6b6b6b;--line:#ececec;--brand:#ba5b3c;--primary:#191919;--surf:#faf9f7;
---상:#ba5b3c;--중:#c98a2b;--하:#6b7280;--미표기:#b5b5b5}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Malgun Gothic",system-ui,sans-serif;font-size:15px}
-header{padding:28px 32px 18px;border-bottom:1px solid var(--line)}
-h1{margin:0;font-size:24px;font-weight:600;letter-spacing:-.2px}
-.sub{color:var(--mut);font-size:13px;margin-top:6px}
-.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:16px 32px;border-bottom:1px solid var(--line);background:var(--surf)}
-.group{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
-.lbl{color:var(--mut);font-size:12px;margin-right:4px}
-.pill{border:1px solid #d9d9d9;background:#fff;color:var(--fg);padding:6px 13px;border-radius:999px;cursor:pointer;font-size:13px;white-space:nowrap}
-.pill:hover{background:#f2f2f2}
-.pill.on{background:var(--primary);border-color:var(--primary);color:#fff}
-.pill .n{opacity:.6;margin-left:4px;font-size:12px}
-input[type=search]{padding:7px 12px;border:1px solid #d9d9d9;border-radius:8px;min-width:240px;font-size:13px;margin-left:auto}
-main{padding:20px 32px 40px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px}
-.card{border:1px solid var(--line);border-radius:12px;padding:16px 18px 14px 20px;position:relative;background:#fff}
-.card:before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:4px;border-radius:0 3px 3px 0;background:var(--미표기)}
-.card.상:before{background:var(--상)}.card.중:before{background:var(--중)}.card.하:before{background:var(--하)}
-.top{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:8px}
-.cat{font-size:12px;color:var(--mut)}
-.tag{font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;color:#fff;background:var(--미표기)}
-.tag.상{background:var(--상)}.tag.중{background:var(--중)}.tag.하{background:var(--하)}
-.title{font-size:16px;font-weight:600;line-height:1.4;margin:2px 0 8px}
-.date{font-size:13px;color:var(--brand);font-weight:600;margin-bottom:8px}
-.note{font-size:13px;color:#444;line-height:1.5;white-space:pre-wrap}
-.who{font-size:12px;color:var(--mut);margin-top:10px;border-top:1px dashed var(--line);padding-top:8px}
-.hist{font-size:12px;color:var(--mut);margin-top:4px}
-.links{margin-top:10px;display:flex;gap:10px;font-size:13px}
-.links a{color:var(--primary);text-decoration:underline;text-underline-offset:3px}
-.empty{color:var(--mut);padding:40px 0;text-align:center}
-.meta{color:var(--mut);font-size:13px;margin-bottom:14px}
+  :root{
+    --bg:#f6f7f8; --card:#fff; --line:#e4e7ea; --line2:#eef0f2;
+    --ink:#1b1f23; --ink2:#4a525a; --ink3:#868e96; --accent:#0d5c4f; --accent-soft:#e6f1ee;
+    --hi:#d9412f; --mid:#e08a00; --lo:#4f7bb0; --na:#9aa1a8;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans KR",system-ui,-apple-system,"Apple SD Gothic Neo",sans-serif;font-size:15px;line-height:1.55}
+  .wrap{max-width:1080px;margin:0 auto;padding:32px 20px 70px}
+  header h1{margin:0;font-size:28px;font-weight:700;letter-spacing:-.02em}
+  header .eyebrow{font-size:13px;font-weight:600;letter-spacing:.08em;color:var(--accent)}
+  header .meta{color:var(--ink3);font-size:14px;margin-top:6px}
+  .links{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+  .links a{font-size:12.5px;font-weight:600;color:#1f6f61;background:#dcf0ea;border-radius:6px;padding:3px 9px;text-decoration:none}
+  .links a:hover{background:#cdeae1}
+
+  .stats{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:22px 0 14px}
+  .sumtop{display:flex;align-items:baseline;gap:8px;margin-bottom:10px}
+  .sumtop .lb{font-size:14px;color:var(--ink3)}
+  .sumtop .tt{font-size:24px;font-weight:700;letter-spacing:-.02em}
+  .bar{display:flex;height:10px;border-radius:6px;overflow:hidden;gap:2px;background:var(--line2)}
+  .bar span{display:block;height:100%}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;font-size:13px;color:var(--ink2)}
+  .legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;vertical-align:0}
+
+  .toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:10px}
+  .seg{display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:3px;flex-wrap:wrap}
+  .seg button{border:0;background:none;font:inherit;font-size:14px;padding:6px 12px;border-radius:7px;color:var(--ink2);cursor:pointer}
+  .seg button.on{background:var(--ink);color:#fff}
+  .seg button .n{opacity:.6;margin-left:3px;font-size:12px}
+  select,input[type=search]{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:8px 12px;color:var(--ink);outline:none}
+  input[type=search]{flex:1;min-width:200px}
+  .rng{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
+  .rng .lbl{font-size:14px;font-weight:600;color:var(--ink2)}
+  input[type=date]{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:7px 10px;color:var(--ink)}
+
+  .ghead{display:flex;align-items:baseline;gap:10px;padding:18px 4px 8px;border-bottom:1.5px solid var(--ink);margin-top:14px}
+  .ghead .d{font-size:18px;font-weight:700}
+  .ghead .today{font-size:12.5px;font-weight:800;color:var(--hi);letter-spacing:.06em}
+  .ghead .n{margin-left:auto;font-size:13px;color:var(--ink3)}
+  .toc{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:10px}
+  .it{border-bottom:1px solid var(--line2)}
+  .it:last-child{border-bottom:0}
+  .it > summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:14px;padding:13px 18px}
+  .it > summary::-webkit-details-marker{display:none}
+  .it > summary:hover,.it[open] > summary{background:#f8fafb}
+  .tm{width:96px;flex:none;font-size:14px;color:var(--ink2);font-variant-numeric:tabular-nums}
+  .lv{flex:none;min-width:26px;text-align:center;font-size:12.5px;font-weight:700;color:#fff;border-radius:6px;padding:3px 6px;background:var(--na)}
+  .lv.상{background:var(--hi)} .lv.중{background:var(--mid)} .lv.하{background:var(--lo)}
+  .cat{flex:none;font-size:12.5px;color:var(--ink2);background:var(--line2);border-radius:6px;padding:2px 8px;white-space:nowrap}
+  .nt{flex:1;min-width:0;font-size:16px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .hb{flex:none;font-size:13px;font-weight:600;color:var(--accent)}
+  .hb.zero{color:var(--ink3);font-weight:500}
+  .chev{flex:none;font-size:11px;color:var(--ink3)}
+  .it[open] .chev{transform:rotate(180deg)}
+  .bd{padding:4px 18px 16px 136px;background:#f8fafb;font-size:14px;color:var(--ink2)}
+  .bd dl{display:grid;grid-template-columns:72px 1fr;gap:6px 12px;margin:8px 0 0}
+  .bd dt{font-size:12.5px;font-weight:600;color:var(--ink3)}
+  .bd dd{margin:0}
+  .bd a{color:var(--accent);font-weight:600}
+  .hist{margin-top:10px;background:#eef6f3;border:1px solid #dcece6;border-radius:8px;padding:8px 10px;font-size:13.5px;color:var(--ink)}
+
+  .cal-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+  .cal-head button{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--card);border-radius:8px;padding:6px 12px;cursor:pointer}
+  .cal-head .mt{font-size:20px;font-weight:600;margin-left:6px}
+  .cal{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .cal .wk{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
+  .cal .wh{font-size:12px;font-weight:600;color:var(--ink3);text-align:center;padding:8px 0;border-bottom:1px solid var(--line)}
+  .cal .day{min-height:120px;border-right:1px solid var(--line2);border-bottom:1px solid var(--line2);padding:5px;min-width:0}
+  .cal .day:nth-child(7n){border-right:0}
+  .cal .day.out{background:#fafbfb;color:#c2c7cc}
+  .cal .dn{font-size:12.5px;font-weight:500;margin-bottom:3px}
+  .cal .day.today .dn{color:#fff;background:var(--accent);border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center}
+  .chip{display:block;font-size:12px;line-height:1.35;padding:2px 5px;margin-top:2px;border-radius:5px;color:#fff;background:var(--na);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .chip.상{background:var(--hi)} .chip.중{background:var(--mid)} .chip.하{background:var(--lo)}
+  .empty{padding:50px 0;text-align:center;color:var(--ink3)}
+  footer{margin-top:36px;font-size:13px;color:var(--ink3);text-align:right}
+  @media (max-width:640px){
+    .wrap{padding:22px 12px 50px}
+    .tm{width:auto}
+    .it > summary{flex-wrap:wrap;gap:6px 10px}
+    .nt{flex-basis:100%;white-space:normal}
+    .bd{padding:4px 14px 14px}
+    .cal .day{min-height:70px;padding:3px}
+    .cal .chip{font-size:0;padding:0;height:6px;margin-top:3px}
+  }
 </style>
 </head>
 <body>
-<header>
-  <h1>오늘의 서울아산병원</h1>
-  <div class="sub" id="sub">불러오는 중…</div>
-</header>
-<div class="bar">
-  <div class="group">
-    <span class="lbl">중요도</span>
-    <button class="pill on" data-g="">전체 <span class="n" id="n-all"></span></button>
-    <button class="pill" data-g="상">상 <span class="n" id="n-상"></span></button>
-    <button class="pill" data-g="중">중 <span class="n" id="n-중"></span></button>
-    <button class="pill" data-g="하">하 <span class="n" id="n-하"></span></button>
-    <button class="pill" data-g="미표기">미표기 <span class="n" id="n-미표기"></span></button>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">원내 행사 List Up</div>
+    <h1>오늘의 서울아산병원</h1>
+    <div class="meta" id="meta">불러오는 중…</div>
+    <div class="links">
+      <a href="https://www.amc.seoul.kr/asan/academy/event/eventList.do" target="_blank" rel="noopener">학술행사</a>
+      <a href="http://asannet.amc.kr/" target="_blank" rel="noopener">아산넷</a>
+    </div>
+  </header>
+
+  <section class="stats">
+    <div class="sumtop"><span class="lb">전체</span><span class="tt" id="total">0</span><span class="lb">건</span></div>
+    <div class="bar" id="bar"></div>
+    <div class="legend" id="legend"></div>
+  </section>
+
+  <div class="toolbar">
+    <div class="seg" id="gradeSeg"></div>
   </div>
-  <div class="group">
+  <div class="toolbar">
+    <div class="seg" id="viewSeg">
+      <button class="on" data-v="list">목록</button>
+      <button data-v="cal">캘린더</button>
+    </div>
+    <select id="catSel"><option value="all">모든 분류</option></select>
+    <select id="topicSel"><option value="all">모든 주제</option></select>
+    <input type="search" id="q" placeholder="행사명·담당자·병원보 기사 검색">
+  </div>
+  <div class="rng">
     <span class="lbl">기간</span>
-    <button class="pill on" data-p="all">전체</button>
-    <button class="pill" data-p="today">오늘부터</button>
-    <button class="pill" data-p="week">이번 주</button>
-    <button class="pill" data-p="month">이번 달</button>
-    <button class="pill" data-p="past">지난 행사</button>
+    <input type="date" id="from"> <span>~</span> <input type="date" id="to">
+    <div class="seg" id="preset">
+      <button data-p="today" class="on">오늘부터</button>
+      <button data-p="week">이번 주</button>
+      <button data-p="month">이번 달</button>
+      <button data-p="past">지난 행사</button>
+      <button data-p="all">전체</button>
+    </div>
   </div>
-  <input type="search" id="q" placeholder="행사명·담당자 검색">
+
+  <div id="list"></div>
+  <div id="cal" style="display:none"></div>
+
+  <footer>관리: 홍보팀 김미소</footer>
 </div>
-<main>
-  <div class="meta" id="meta"></div>
-  <div class="grid" id="grid"></div>
-</main>
+
 <script>
 const SRC = 'data/events.md';
-let headers = [], rows = [], grade = '', period = 'all', query = '';
+const GRADES = ['상','중','하','미표기'];
+const COLORS = {상:'var(--hi)', 중:'var(--mid)', 하:'var(--lo)', 미표기:'var(--na)'};
+let rows = [], view = 'list', grade = 'all', preset = 'today', query = '';
+const TODAY = new Date(); TODAY.setHours(0,0,0,0);
 
-const today = new Date(); today.setHours(0,0,0,0);
-const ymd = d => d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const pad = n => String(n).padStart(2,'0');
+const ymd = d => d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const esc = s => String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 
 function splitRow(line){
   return line.trim().replace(/^\||\|$/g,'').split(/(?<!\\)\|/).map(s=>s.replace(/\\\|/g,'|').trim());
 }
 function parse(md){
-  const lines = md.split('\n').filter(l=>l.trim().startsWith('|'));
-  headers = splitRow(lines[0]);
-  rows = lines.slice(2).map(splitRow).filter(r=>r[0]).map(r=>{
-    const o = {}; headers.forEach((h,i)=>o[h]=r[i]||''); return o;
-  });
+  const lines = md.split('\n').filter(l => l.trim().startsWith('|'));
+  const head = splitRow(lines[0]);
+  return lines.slice(2).map(l => {
+    const r = splitRow(l), o = {};
+    head.forEach((h,i) => o[h] = r[i] || '');
+    return o;
+  }).filter(o => o['행사명']);
 }
-// 행사일 칸에서 첫 날짜를 꺼냄 (예: 2026-12-12~2026-12-13 → 2026-12-12)
-function firstDate(s){
-  const m = (s||'').match(/(\d{4})-(\d{2})-(\d{2})/);
-  if(m) return new Date(+m[1], +m[2]-1, +m[3]);
-  return null;
-}
-function lastDate(s){
-  const all = [...(s||'').matchAll(/(\d{4})-(\d{2})-(\d{2})/g)];
-  if(!all.length) return null;
-  const m = all[all.length-1];
-  return new Date(+m[1], +m[2]-1, +m[3]);
-}
-function inPeriod(r){
-  const d = firstDate(r['행사일']);
-  if(period==='all') return true;
-  if(!d) return false;
-  const end = lastDate(r['행사일']) || d;
-  const weekStart = new Date(today); weekStart.setDate(today.getDate()-((today.getDay()+6)%7));
-  const weekEnd = new Date(weekStart); weekEnd.setDate(weekStart.getDate()+6);
-  const monthStart = new Date(today.getFullYear(), today.getMonth(), 1);
-  const monthEnd = new Date(today.getFullYear(), today.getMonth()+1, 0);
-  if(period==='today') return end>=today;
-  if(period==='week') return d<=weekEnd && end>=weekStart;
-  if(period==='month') return d<=monthEnd && end>=monthStart;
-  if(period==='past') return end<today;
-  return true;
+// 행사일 칸의 첫 날짜 / 마지막 날짜
+function dates(s){
+  return [...(s||'').matchAll(/(\d{4})-(\d{2})-(\d{2})/g)].map(m => new Date(+m[1], +m[2]-1, +m[3]));
 }
 const gradeOf = r => (r['사보 중요도']||'').trim() || '미표기';
+const topicOf = r => (r['주제별']||'').trim() || '미지정';
+const histCount = r => (r['게재 호수·코너·기사 제목']||'').split(/\s*\|\s*/).filter(x=>/호/.test(x)).length;
 
-function counts(){
-  const c = {'상':0,'중':0,'하':0,'미표기':0};
-  rows.forEach(r=>{ c[gradeOf(r)] = (c[gradeOf(r)]||0)+1; });
-  document.getElementById('n-all').textContent = rows.length;
-  ['상','중','하','미표기'].forEach(k=>document.getElementById('n-'+k).textContent = c[k]||0);
+function inPreset(r){
+  const ds = dates(r['행사일']);
+  if(preset==='all') return true;
+  if(!ds.length) return false;
+  const start = ds[0], end = ds[ds.length-1];
+  const wStart = new Date(TODAY); wStart.setDate(TODAY.getDate()-((TODAY.getDay()+6)%7));
+  const wEnd = new Date(wStart); wEnd.setDate(wStart.getDate()+6);
+  const mStart = new Date(TODAY.getFullYear(), TODAY.getMonth(), 1);
+  const mEnd = new Date(TODAY.getFullYear(), TODAY.getMonth()+1, 0);
+  if(preset==='today') return end >= TODAY;
+  if(preset==='week') return start <= wEnd && end >= wStart;
+  if(preset==='month') return start <= mEnd && end >= mStart;
+  if(preset==='past') return end < TODAY;
+  return true;
 }
-function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function passes(r){
+  if(grade!=='all' && gradeOf(r)!==grade) return false;
+  if(catSel.value!=='all' && r['행사 분류']!==catSel.value) return false;
+  if(topicSel.value!=='all' && !topicOf(r).includes(topicSel.value)) return false;
+  if(query && !Object.values(r).join(' ').toLowerCase().includes(query)) return false;
+  if(!inPreset(r)) return false;
+  return true;
+}
 
-function render(){
-  const list = rows.filter(r=>{
-    if(grade && gradeOf(r)!==grade) return false;
-    if(!inPeriod(r)) return false;
-    if(query && !Object.values(r).join(' ').toLowerCase().includes(query)) return false;
-    return true;
+function buildControls(){
+  const g = document.getElementById('gradeSeg');
+  g.innerHTML = ['all',...GRADES].map(k =>
+    `<button data-g="${k}" class="${k===grade?'on':''}">${k==='all'?'전체':k} <span class="n" data-n="${k}"></span></button>`).join('');
+  g.querySelectorAll('button').forEach(b => b.onclick = () => { grade = b.dataset.g; buildControls(); render(); });
+
+  const cats = [...new Set(rows.map(r=>r['행사 분류']).filter(Boolean))].sort();
+  catSel.innerHTML = '<option value="all">모든 분류</option>' + cats.map(c=>`<option>${esc(c)}</option>`).join('');
+  const tops = ['병원','연구원','재단'];
+  topicSel.innerHTML = '<option value="all">모든 주제</option>' + tops.map(t=>`<option>${t}</option>`).join('');
+
+  const counts = {};
+  GRADES.forEach(k => counts[k] = rows.filter(r=>gradeOf(r)===k).length);
+  document.querySelectorAll('[data-n]').forEach(s => {
+    const k = s.dataset.n;
+    s.textContent = k==='all' ? rows.length : (counts[k]||0);
   });
-  document.getElementById('meta').textContent = `표시 ${list.length}건 (전체 ${rows.length}건)`;
-  if(!list.length){ document.getElementById('grid').innerHTML = '<div class="empty">조건에 맞는 행사가 없습니다.</div>'; return; }
-  document.getElementById('grid').innerHTML = list.map(r=>{
-    const g = gradeOf(r);
-    const cls = ['상','중','하'].includes(g) ? g : '';
-    const links = r['출처 링크'] && /^https?:/.test(r['출처 링크']) ? `<a href="${esc(r['출처 링크'])}" target="_blank" rel="noopener">원문 보기</a>` : '';
-    const hist = r['사보 이력 비교'] ? `<div class="hist">병원보 이력: ${esc(r['사보 이력 비교'])}</div>` : '';
-    const who = [r['아산넷 등록자(게시글 올린 사람)'], r['행사 담당/문의(본문에 명시된 경우)']].filter(Boolean).map(esc).join(' · ');
-    return `<article class="card ${cls}">
-      <div class="top"><span class="cat">${esc(r['행사 분류']||'')}</span><span class="tag ${cls}">${g}</span></div>
-      <div class="title">${esc(r['행사명']||'')}</div>
-      <div class="date">${esc(r['행사일']||'')}</div>
-      ${r['비고(공개 가능)'] ? `<div class="note">${esc(r['비고(공개 가능)'])}</div>` : ''}
-      ${hist}
-      ${who ? `<div class="who">${who}</div>` : ''}
-      ${links ? `<div class="links">${links}</div>` : ''}
-    </article>`;
+  document.getElementById('total').textContent = rows.length;
+  document.getElementById('bar').innerHTML = GRADES.map(k =>
+    counts[k] ? `<span style="flex:${counts[k]};background:${COLORS[k]}"></span>` : '').join('');
+  document.getElementById('legend').innerHTML = GRADES.map(k =>
+    `<span><i style="background:${COLORS[k]}"></i>${k} ${counts[k]||0}건</span>`).join('');
+}
+
+function listHTML(items){
+  if(!items.length) return '<div class="empty">조건에 맞는 행사가 없습니다.</div>';
+  const groups = {};
+  items.forEach(r => {
+    const d = dates(r['행사일'])[0];
+    const key = d ? ymd(d) : '날짜 미정';
+    (groups[key] = groups[key] || []).push(r);
+  });
+  return Object.keys(groups).sort((a,b) => a==='날짜 미정' ? 1 : b==='날짜 미정' ? -1 : a.localeCompare(b)).map(k => {
+    const d = k==='날짜 미정' ? null : new Date(k);
+    const wd = d ? '(' + '일월화수목금토'[d.getDay()] + ')' : '';
+    const today = d && +d===+TODAY ? '<span class="today">TODAY</span>' : '';
+    const head = `<div class="ghead"><span class="d">${k==='날짜 미정'?k:k.slice(5).replace('-','/')+' '+wd}</span>${today}<span class="n">${groups[k].length}건</span></div>`;
+    const body = '<div class="toc">' + groups[k].map(r => {
+      const g = gradeOf(r), h = histCount(r);
+      const who = [r['아산넷 등록자(게시글 올린 사람)'], r['행사 담당/문의(본문에 명시된 경우)']].filter(Boolean).map(esc).join(' · ') || '미기재';
+      const link = /^https?:/.test(r['출처 링크']||'') ? `<a href="${esc(r['출처 링크'])}" target="_blank" rel="noopener">원문 보기 →</a>` : '';
+      return `<details class="it">
+        <summary>
+          <span class="tm">${esc((r['행사일']||'').replace(/^\d{4}-/,'').slice(0,20))}</span>
+          <span class="lv ${g}">${g}</span>
+          <span class="cat">${esc(r['행사 분류']||'')}</span>
+          <span class="nt">${esc(r['행사명'])}</span>
+          <span class="hb ${h?'':'zero'}">${h?'이력 '+h+'건':'이력 없음'}</span>
+          <span class="chev">▼</span>
+        </summary>
+        <div class="bd">
+          ${r['비고(공개 가능)'] ? `<div>${esc(r['비고(공개 가능)'])}</div>` : ''}
+          <dl>
+            <dt>담당</dt><dd>${who}</dd>
+            <dt>주제</dt><dd>${esc(topicOf(r))}</dd>
+            <dt>링크</dt><dd>${link || '-'}</dd>
+          </dl>
+          ${r['사보 이력 비교'] ? `<div class="hist"><b>병원보 이력</b> · ${esc(r['사보 이력 비교'])}${r['게재 호수·코너·기사 제목'] ? '<br>' + esc(r['게재 호수·코너·기사 제목']) : ''}</div>` : ''}
+        </div>
+      </details>`;
+    }).join('') + '</div>';
+    return `<div class="group">${head}${body}</div>`;
   }).join('');
 }
 
-async function load(){
-  try{
-    const res = await fetch(SRC+'?t='+Date.now(), {cache:'no-store'});
-    if(!res.ok) throw new Error(res.status);
-    parse(await res.text());
-    counts(); render();
-    document.getElementById('sub').textContent = '마지막 확인 ' + new Date().toLocaleString('ko-KR');
-  }catch(e){
-    document.getElementById('sub').textContent = '데이터를 불러오지 못했습니다. 잠시 후 새로고침하세요.';
+function calHTML(items){
+  const base = calBase;
+  const first = new Date(base.getFullYear(), base.getMonth(), 1);
+  const start = new Date(first); start.setDate(1-first.getDay());
+  const cells = [];
+  for(let i=0;i<42;i++){
+    const d = new Date(start); d.setDate(start.getDate()+i);
+    const evs = items.filter(r => {
+      const ds = dates(r['행사일']); if(!ds.length) return false;
+      return d >= ds[0] && d <= (ds[ds.length-1]);
+    });
+    const isToday = +d === +TODAY;
+    const out = d.getMonth() !== base.getMonth();
+    cells.push(`<div class="day ${out?'out':''}"><div class="dn">${isToday?`<span style="display:contents">${d.getDate()}</span>`:d.getDate()}</div>${evs.slice(0,3).map(r => `<a class="chip ${gradeOf(r)}" href="${/^https?:/.test(r['출처 링크']||'')?esc(r['출처 링크']):'#'}" target="_blank" rel="noopener">${esc(r['행사명'])}</a>`).join('')}${evs.length>3?`<div class="chip" style="background:none;color:var(--ink3)">+${evs.length-3}</div>`:''}</div>`);
+  }
+  return `<div class="cal-head">
+      <button id="calPrev">‹</button><button id="calToday">오늘</button><button id="calNext">›</button>
+      <span class="mt">${base.getFullYear()}년 ${base.getMonth()+1}월</span></div>
+    <div class="cal"><div class="wk">${['일','월','화','수','목','금','토'].map(x=>`<div class="wh">${x}</div>`).join('')}</div>
+    <div class="wk" style="grid-auto-rows:auto;display:grid;grid-template-columns:repeat(7,minmax(0,1fr))">${cells.join('')}</div></div>`;
+}
+let calBase = new Date(TODAY.getFullYear(), TODAY.getMonth(), 1);
+
+function render(){
+  const items = rows.filter(passes).sort((a,b) => {
+    const da = dates(a['행사일'])[0], db = dates(b['행사일'])[0];
+    if(!da && !db) return 0; if(!da) return 1; if(!db) return -1;
+    return da - db;
+  });
+  document.getElementById('meta').textContent = `표시 ${items.length}건 · 전체 ${rows.length}건 · 화면 갱신 ${new Date().toLocaleString('ko-KR')}`;
+  if(view==='list'){
+    document.getElementById('list').style.display = '';
+    document.getElementById('cal').style.display = 'none';
+    document.getElementById('list').innerHTML = listHTML(items);
+  } else {
+    document.getElementById('list').style.display = 'none';
+    document.getElementById('cal').style.display = '';
+    document.getElementById('cal').innerHTML = calHTML(items);
+    document.getElementById('calPrev').onclick = () => { calBase = new Date(calBase.getFullYear(), calBase.getMonth()-1, 1); render(); };
+    document.getElementById('calNext').onclick = () => { calBase = new Date(calBase.getFullYear(), calBase.getMonth()+1, 1); render(); };
+    document.getElementById('calToday').onclick = () => { calBase = new Date(TODAY.getFullYear(), TODAY.getMonth(), 1); render(); };
   }
 }
-document.querySelectorAll('[data-g]').forEach(b=>b.addEventListener('click',()=>{
-  document.querySelectorAll('[data-g]').forEach(x=>x.classList.remove('on'));
-  b.classList.add('on'); grade = b.dataset.g; render();
-}));
-document.querySelectorAll('[data-p]').forEach(b=>b.addEventListener('click',()=>{
-  document.querySelectorAll('[data-p]').forEach(x=>x.classList.remove('on'));
-  b.classList.add('on'); period = b.dataset.p; render();
-}));
-document.getElementById('q').addEventListener('input',e=>{ query = e.target.value.trim().toLowerCase(); render(); });
+
+const catSel = document.getElementById('catSel');
+const topicSel = document.getElementById('topicSel');
+catSel.onchange = topicSel.onchange = render;
+document.getElementById('q').oninput = e => { query = e.target.value.trim().toLowerCase(); render(); };
+document.querySelectorAll('#viewSeg button').forEach(b => b.onclick = () => {
+  document.querySelectorAll('#viewSeg button').forEach(x => x.classList.remove('on'));
+  b.classList.add('on'); view = b.dataset.v; render();
+});
+document.querySelectorAll('#preset button').forEach(b => b.onclick = () => {
+  document.querySelectorAll('#preset button').forEach(x => x.classList.remove('on'));
+  b.classList.add('on'); preset = b.dataset.p; render();
+});
+
+async function load(){
+  try{
+    const res = await fetch(SRC + '?t=' + Date.now(), {cache:'no-store'});
+    if(!res.ok) throw new Error(res.status);
+    rows = parse(await res.text());
+    buildControls(); render();
+  }catch(e){
+    document.getElementById('meta').textContent = '데이터를 불러오지 못했습니다. 잠시 후 새로고침하세요.';
+  }
+}
 load();
 setInterval(load, 5*60*1000);
 </script>
