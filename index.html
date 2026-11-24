@@ -65,9 +65,9 @@
   .it > summary:hover,.it[open] > summary{background:#f8fafb}
   .tm{width:118px;flex:none;font-size:16px;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap}
   .tm.na{color:#b5bbc1}
-  .lv{flex:none;min-width:30px;text-align:center;font-size:14px;font-weight:700;color:#fff;border-radius:999px;padding:3px 8px;background:var(--na)}
+  .lv{flex:none;min-width:30px;text-align:center;font-size:14px;font-weight:700;color:#fff;border-radius:6px;padding:3px 8px;background:var(--na)}
   .lv.상{background:var(--hi)} .lv.중{background:var(--mid)} .lv.하{background:var(--lo)}
-  .tbadge{display:inline-flex;align-items:center;gap:5px;flex:none;font-size:14px;font-weight:600;color:#0e7a66;background:#e3f4f0;border-radius:999px;padding:3px 10px 3px 7px;white-space:nowrap}
+  .tbadge{display:inline-flex;align-items:center;gap:5px;flex:none;font-size:14px;font-weight:600;color:#0e7a66;background:#e3f4f0;border-radius:6px;padding:3px 10px 3px 7px;white-space:nowrap}
   .tbadge svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
   .tbadge.재단{color:#93690a;background:#fbf3df}
   .tbadge.연구원{color:#5a40bf;background:#efebfb}
@@ -237,6 +237,21 @@
     #calToday{padding:5px 12px;font-size:13px}
     .cal-head .mt{font-size:17px;margin:0 4px}
   }
+
+  /* ===== PC 행사 바 높이 조금 줄이기 ===== */
+  @media (min-width:641px){
+    .bars{grid-auto-rows:22px;row-gap:4px}
+    .bars .bar{height:22px;line-height:22px;font-size:13.5px;border-radius:11px}
+  }
+
+  /* ===== PC 목록: 시간·중요도·주제 표기를 제목 줄에 맞춤 ===== */
+  @media (min-width:641px){
+    .it > summary{align-items:flex-start}
+    .nt{line-height:29px}
+    .tm,.lv,.tbadge,.hb,.chev{height:29px;display:inline-flex;align-items:center}
+    .lv{justify-content:center}
+    .chev{width:12px;justify-content:center}
+  }
 </style>
 </head>
 <body>
@@ -274,7 +289,7 @@
       <button class="calbtn desk" id="viewBtn" type="button">캘린더</button>
     </div>
     <div class="row">
-      <select id="topicSel"><option value="all">모든 주제</option><option>병원</option><option>연구원</option><option>재단</option></select>
+      <select id="topicSel"><option value="all">모든 주제</option><option>병원</option><option>연구</option><option>재단</option></select>
       <select id="catSel"><option value="all">모든 분류</option></select>
       <select id="histSel"><option value="all">병원보 전체</option><option value="has">이력 있음</option><option value="none">이력 없음</option></select>
       <div class="search"><input type="search" id="q" placeholder="행사명·장소·담당자·병원보 기사 제목 검색"></div>
@@ -359,7 +374,7 @@ function personsOf(r){
   return [r['아산넷 등록자(게시글 올린 사람)'], r['행사 담당/문의(본문에 명시된 경우)']]
     .map(v => (v||'').trim()).filter((v,i,a) => v && a.indexOf(v)===i).map(fmtPerson).join(' / ');
 }
-function topicBadge(r){ const k = topicKey(r); return k ? `<span class="tbadge ${k}">${TOPIC_ICON[k]}${k}</span>` : ''; }
+function topicBadge(r){ const k = topicKey(r); const label = k==='연구원' ? '연구' : k; return k ? `<span class="tbadge ${k}">${TOPIC_ICON[k]}${label}</span>` : ''; }
 function linkOf(r){ return /^https?:/.test(r['출처 링크']||'') ? r['출처 링크'] : ''; }
 
 function fmtHist(x){
