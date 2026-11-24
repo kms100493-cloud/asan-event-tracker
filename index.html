@@ -256,6 +256,8 @@ function listHTML(items){
             <dt>링크</dt><dd>${link || '-'}</dd>
           </dl>
           ${r['사보 이력 비교'] ? `<div class="hist"><b>병원보 이력</b> · ${esc(r['사보 이력 비교'])}${r['게재 호수·코너·기사 제목'] ? '<br>' + esc(r['게재 호수·코너·기사 제목']) : ''}</div>` : ''}
+          ${r['AI 가이드'] ? `<div class="hist" style="background:#f4f1fd;border-color:#e2daf7"><b>AI 가이드</b> · ${esc(r['AI 가이드'])}</div>` : ''}
+
         </div>
       </details>`;
     }).join('') + '</div>';
