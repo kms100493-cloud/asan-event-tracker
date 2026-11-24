@@ -213,20 +213,29 @@
 
   /* ===== 모바일 캘린더 조정 ===== */
   @media (max-width:640px){
-    .cal-head{flex-wrap:wrap;gap:8px;margin:16px 0 10px}
-    #calToday{order:0;flex:0 0 auto;margin-bottom:2px;padding:5px 12px;font-size:13px}
-    #calPrev{order:1;padding:4px 12px;font-size:18px;line-height:1}
-    .cal-head .mt{order:2;flex:1;text-align:center;margin:0;font-size:16px}
-    #calNext{order:3;padding:4px 12px;font-size:18px;line-height:1}
     .day{min-height:112px;padding:4px 3px 6px}
-    .bars{top:30px;grid-auto-rows:16px;row-gap:2px;padding:0 1px}
-    .bars .bar{font-size:9px;height:16px;line-height:16px;padding:0 4px;border-radius:8px;margin:0 1px;font-weight:600}
-    .bars .bar.cl{border-top-left-radius:0;border-bottom-left-radius:0;margin-left:0}
-    .bars .bar.cr{border-top-right-radius:0;border-bottom-right-radius:0;margin-right:0}
     .dn{height:24px;font-size:11px}
     .dn span{width:22px;height:22px}
     .dn span.tday{width:22px;height:22px}
     .dn .more{font-size:9.5px}
+  }
+
+  /* ===== 모바일 행사 바 얇게 ===== */
+  @media (max-width:640px){
+    .bars{top:30px;grid-auto-rows:12px;row-gap:3px;padding:0 1px}
+    .bars .bar{height:12px;line-height:12px;font-size:8.5px;padding:0 4px;border-radius:6px;margin:0 1px;font-weight:600}
+    .bars .bar.cl{border-top-left-radius:0;border-bottom-left-radius:0;margin-left:0}
+    .bars .bar.cr{border-top-right-radius:0;border-bottom-right-radius:0;margin-right:0}
+  }
+
+  /* ===== 캘린더 헤더: 화살표+월 가운데 정렬, 오늘 버튼 왼쪽 ===== */
+  .cal-head{position:relative;justify-content:center;min-height:40px;margin:22px 0 12px}
+  #calToday{position:absolute;left:0;top:50%;transform:translateY(-50%);margin:0}
+  .cal-head .mt{flex:0 0 auto;margin:0 6px;font-size:22px;white-space:nowrap}
+  @media (max-width:640px){
+    .cal-head{margin:16px 0 10px;min-height:34px}
+    #calToday{padding:5px 12px;font-size:13px}
+    .cal-head .mt{font-size:17px;margin:0 4px}
   }
 </style>
 </head>
