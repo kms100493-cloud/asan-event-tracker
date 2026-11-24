@@ -10,7 +10,7 @@
 <style>
   :root{
     --bg:#f6f7f8; --card:#fff; --line:#e4e7ea; --line2:#eef0f2;
-    --ink:#1b1f23; --ink2:#4a525a; --ink3:#868e96; --accent:#0d5c4f; --accent-soft:#e6f1ee;
+    --ink:#1b1f23; --ink2:#4a525a; --ink3:#868e96; --accent:#0d5c4f;
     --hi:#d9412f; --mid:#e08a00; --lo:#4f7bb0; --na:#9aa1a8;
   }
   *{box-sizing:border-box}
@@ -37,6 +37,10 @@
   .seg button{border:0;background:none;font:inherit;font-size:14px;padding:6px 12px;border-radius:7px;color:var(--ink2);cursor:pointer}
   .seg button.on{background:var(--ink);color:#fff}
   .seg button .n{opacity:.6;margin-left:3px;font-size:12px}
+  #viewSeg{background:none;border:0;padding:0;gap:6px}
+  #viewSeg button{background:#eef7f4;color:#2f6b5f;border:1px solid #d5ebe3;border-radius:10px;padding:7px 14px;font-weight:600}
+  #viewSeg button:hover{background:#e2f3ed}
+  #viewSeg button.on{background:#bfe6da;color:#17584c;border-color:#a9dccb}
   select,input[type=search]{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:8px 12px;color:var(--ink);outline:none}
   input[type=search]{flex:1;min-width:200px}
   .rng{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
@@ -68,20 +72,46 @@
   .bd dd{margin:0}
   .bd a{color:var(--accent);font-weight:600}
   .hist{margin-top:10px;background:#eef6f3;border:1px solid #dcece6;border-radius:8px;padding:8px 10px;font-size:13.5px;color:var(--ink)}
+  .aig{background:#f4f1fd;border:1px solid #e4ddf8;border-radius:8px;padding:8px 10px;font-size:13.5px;color:var(--ink);line-height:1.6}
 
   .cal-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
   .cal-head button{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--card);border-radius:8px;padding:6px 12px;cursor:pointer}
   .cal-head .mt{font-size:20px;font-weight:600;margin-left:6px}
   .cal{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
-  .cal .wk{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
+  .cal .wk7{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
   .cal .wh{font-size:12px;font-weight:600;color:var(--ink3);text-align:center;padding:8px 0;border-bottom:1px solid var(--line)}
-  .cal .day{min-height:120px;border-right:1px solid var(--line2);border-bottom:1px solid var(--line2);padding:5px;min-width:0}
-  .cal .day:nth-child(7n){border-right:0}
-  .cal .day.out{background:#fafbfb;color:#c2c7cc}
-  .cal .dn{font-size:12.5px;font-weight:500;margin-bottom:3px}
-  .cal .day.today .dn{color:#fff;background:var(--accent);border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center}
-  .chip{display:block;font-size:12px;line-height:1.35;padding:2px 5px;margin-top:2px;border-radius:5px;color:#fff;background:var(--na);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .chip.상{background:var(--hi)} .chip.중{background:var(--mid)} .chip.하{background:var(--lo)}
+  .wkrow{position:relative}
+  .days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
+  .day{min-height:132px;border-right:1px solid var(--line2);border-bottom:1px solid var(--line2);padding:5px 6px;min-width:0}
+  .day:nth-child(7n){border-right:0}
+  .day.out{background:#fafbfb}
+  .day.out .dn span{color:#c2c7cc}
+  .dn{display:flex;align-items:center;justify-content:space-between;font-size:12.5px;font-weight:500;height:24px}
+  .dn span{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%}
+  .dn span.tday{background:var(--accent);color:#fff;font-weight:700}
+  .dn .more{font-size:11.5px;color:var(--ink3)}
+  .bars{position:absolute;left:0;right:0;top:30px;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));grid-auto-rows:22px;row-gap:4px;padding:0 3px;pointer-events:none}
+  .bars .bar{pointer-events:auto;cursor:pointer;border:0;text-align:left;font:inherit;font-size:12.5px;font-weight:600;color:#fff;padding:0 8px;height:22px;line-height:22px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-radius:5px;margin:0 2px;background:var(--na)}
+  .bars .bar.h{background:var(--hi)} .bars .bar.m{background:var(--mid)} .bars .bar.l{background:var(--lo)} .bars .bar.x{background:var(--na)}
+  .bars .bar.cl{border-top-left-radius:0;border-bottom-left-radius:0;margin-left:0}
+  .bars .bar.cr{border-top-right-radius:0;border-bottom-right-radius:0;margin-right:0}
+  .bars .bar:hover{filter:brightness(.93)}
+
+  .ovl{position:fixed;inset:0;background:rgba(20,24,28,.38);display:none;align-items:center;justify-content:center;padding:16px;z-index:50}
+  .ovl.show{display:flex}
+  .pop{position:relative;width:100%;max-width:480px;max-height:86vh;overflow:auto;background:#fff;border-radius:14px;box-shadow:0 18px 50px rgba(0,0,0,.22);padding:22px 22px 20px}
+  .pclose{position:absolute;top:10px;right:10px;width:34px;height:34px;border:0;border-radius:50%;background:none;font-size:20px;color:var(--ink3);cursor:pointer}
+  .pclose:hover{background:var(--line2);color:var(--ink)}
+  .ptags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;padding-right:30px}
+  .pop h3{margin:0;font-size:18px;font-weight:700;letter-spacing:-.01em;line-height:1.4}
+  .pop .when{margin-top:10px;font-size:14px;color:var(--ink2)}
+  .pop dl{display:grid;grid-template-columns:58px 1fr;gap:7px 12px;margin:14px 0 0;font-size:14px;color:var(--ink2)}
+  .pop dt{font-size:12.5px;font-weight:600;color:var(--ink3)}
+  .pop dd{margin:0}
+  .pop .note{margin:12px 0 0;font-size:14px;color:var(--ink2)}
+  .hbox{background:#eef6f3;border:1px solid #dcece6;border-radius:8px;padding:8px 10px;font-size:13.5px;color:var(--ink);margin-top:12px;line-height:1.6}
+  .go{display:inline-block;margin-top:16px;font-size:14px;font-weight:600;color:#fff;background:var(--ink);border-radius:8px;padding:8px 14px;text-decoration:none}
+  .go:hover{background:#000}
   .empty{padding:50px 0;text-align:center;color:var(--ink3)}
   footer{margin-top:36px;font-size:13px;color:var(--ink3);text-align:right}
   @media (max-width:640px){
@@ -90,8 +120,9 @@
     .it > summary{flex-wrap:wrap;gap:6px 10px}
     .nt{flex-basis:100%;white-space:normal}
     .bd{padding:4px 14px 14px}
-    .cal .day{min-height:70px;padding:3px}
-    .cal .chip{font-size:0;padding:0;height:6px;margin-top:3px}
+    .day{min-height:86px;padding:3px}
+    .bars{top:28px;grid-auto-rows:18px}
+    .bars .bar{font-size:0;height:18px;line-height:18px;padding:0}
   }
 </style>
 </head>
@@ -109,13 +140,11 @@
 
   <section class="stats">
     <div class="sumtop"><span class="lb">전체</span><span class="tt" id="total">0</span><span class="lb">건</span></div>
-    <div class="bar" id="bar"></div>
+    <div class="bar" id="barBox"></div>
     <div class="legend" id="legend"></div>
   </section>
 
-  <div class="toolbar">
-    <div class="seg" id="gradeSeg"></div>
-  </div>
+  <div class="toolbar"><div class="seg" id="gradeSeg"></div></div>
   <div class="toolbar">
     <div class="seg" id="viewSeg">
       <button class="on" data-v="list">목록</button>
@@ -143,12 +172,17 @@
   <footer>관리: 홍보팀 김미소</footer>
 </div>
 
+<div class="ovl" id="ovl"><div class="pop" id="pop" role="dialog" aria-modal="true"></div></div>
+
 <script>
 const SRC = 'data/events.md';
 const GRADES = ['상','중','하','미표기'];
 const COLORS = {상:'var(--hi)', 중:'var(--mid)', 하:'var(--lo)', 미표기:'var(--na)'};
+const MAXLANE = 4;
 let rows = [], view = 'list', grade = 'all', preset = 'today', query = '';
+let calBase = null;
 const TODAY = new Date(); TODAY.setHours(0,0,0,0);
+calBase = new Date(TODAY.getFullYear(), TODAY.getMonth(), 1);
 
 const pad = n => String(n).padStart(2,'0');
 const ymd = d => d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
@@ -166,13 +200,13 @@ function parse(md){
     return o;
   }).filter(o => o['행사명']);
 }
-// 행사일 칸의 첫 날짜 / 마지막 날짜
 function dates(s){
   return [...(s||'').matchAll(/(\d{4})-(\d{2})-(\d{2})/g)].map(m => new Date(+m[1], +m[2]-1, +m[3]));
 }
 const gradeOf = r => (r['사보 중요도']||'').trim() || '미표기';
 const topicOf = r => (r['주제별']||'').trim() || '미지정';
 const histCount = r => (r['게재 호수·코너·기사 제목']||'').split(/\s*\|\s*/).filter(x=>/호/.test(x)).length;
+const gcls = r => { const g = gradeOf(r); return g==='상'?'h':g==='중'?'m':g==='하'?'l':'x'; };
 
 function inPreset(r){
   const ds = dates(r['행사일']);
@@ -194,8 +228,7 @@ function passes(r){
   if(catSel.value!=='all' && r['행사 분류']!==catSel.value) return false;
   if(topicSel.value!=='all' && !topicOf(r).includes(topicSel.value)) return false;
   if(query && !Object.values(r).join(' ').toLowerCase().includes(query)) return false;
-  if(!inPreset(r)) return false;
-  return true;
+  return inPreset(r);
 }
 
 function buildControls(){
@@ -206,8 +239,7 @@ function buildControls(){
 
   const cats = [...new Set(rows.map(r=>r['행사 분류']).filter(Boolean))].sort();
   catSel.innerHTML = '<option value="all">모든 분류</option>' + cats.map(c=>`<option>${esc(c)}</option>`).join('');
-  const tops = ['병원','연구원','재단'];
-  topicSel.innerHTML = '<option value="all">모든 주제</option>' + tops.map(t=>`<option>${t}</option>`).join('');
+  topicSel.innerHTML = '<option value="all">모든 주제</option>' + ['병원','연구원','재단'].map(t=>`<option>${t}</option>`).join('');
 
   const counts = {};
   GRADES.forEach(k => counts[k] = rows.filter(r=>gradeOf(r)===k).length);
@@ -216,7 +248,7 @@ function buildControls(){
     s.textContent = k==='all' ? rows.length : (counts[k]||0);
   });
   document.getElementById('total').textContent = rows.length;
-  document.getElementById('bar').innerHTML = GRADES.map(k =>
+  document.getElementById('barBox').innerHTML = GRADES.map(k =>
     counts[k] ? `<span style="flex:${counts[k]};background:${COLORS[k]}"></span>` : '').join('');
   document.getElementById('legend').innerHTML = GRADES.map(k =>
     `<span><i style="background:${COLORS[k]}"></i>${k} ${counts[k]||0}건</span>`).join('');
@@ -256,8 +288,7 @@ function listHTML(items){
             <dt>링크</dt><dd>${link || '-'}</dd>
           </dl>
           ${r['사보 이력 비교'] ? `<div class="hist"><b>병원보 이력</b> · ${esc(r['사보 이력 비교'])}${r['게재 호수·코너·기사 제목'] ? '<br>' + esc(r['게재 호수·코너·기사 제목']) : ''}</div>` : ''}
-          ${r['AI 가이드'] ? `<div class="hist" style="background:#f4f1fd;border-color:#e2daf7"><b>AI 가이드</b> · ${esc(r['AI 가이드'])}</div>` : ''}
-
+          ${r['AI 가이드'] ? `<div class="aig" style="margin-top:10px"><b>AI 가이드</b><br>${esc(r['AI 가이드']).replace(/ \/ /g,'<br>')}</div>` : ''}
         </div>
       </details>`;
     }).join('') + '</div>';
@@ -265,28 +296,72 @@ function listHTML(items){
   }).join('');
 }
 
+function weekStartOf(d){ const s = new Date(d); s.setDate(d.getDate()-d.getDay()); return s; }
+
 function calHTML(items){
-  const base = calBase;
-  const first = new Date(base.getFullYear(), base.getMonth(), 1);
-  const start = new Date(first); start.setDate(1-first.getDay());
-  const cells = [];
-  for(let i=0;i<42;i++){
-    const d = new Date(start); d.setDate(start.getDate()+i);
-    const evs = items.filter(r => {
-      const ds = dates(r['행사일']); if(!ds.length) return false;
-      return d >= ds[0] && d <= (ds[ds.length-1]);
-    });
-    const isToday = +d === +TODAY;
-    const out = d.getMonth() !== base.getMonth();
-    cells.push(`<div class="day ${out?'out':''}"><div class="dn">${isToday?`<span style="display:contents">${d.getDate()}</span>`:d.getDate()}</div>${evs.slice(0,3).map(r => `<a class="chip ${gradeOf(r)}" href="${/^https?:/.test(r['출처 링크']||'')?esc(r['출처 링크']):'#'}" target="_blank" rel="noopener">${esc(r['행사명'])}</a>`).join('')}${evs.length>3?`<div class="chip" style="background:none;color:var(--ink3)">+${evs.length-3}</div>`:''}</div>`);
-  }
-  return `<div class="cal-head">
+  const first = new Date(calBase.getFullYear(), calBase.getMonth(), 1);
+  const monthEnd = new Date(calBase.getFullYear(), calBase.getMonth()+1, 0);
+  const gridStart = weekStartOf(first);
+  const nWeeks = Math.ceil((first.getDay() + monthEnd.getDate()) / 7);
+  const head = `<div class="cal-head">
       <button id="calPrev">‹</button><button id="calToday">오늘</button><button id="calNext">›</button>
-      <span class="mt">${base.getFullYear()}년 ${base.getMonth()+1}월</span></div>
-    <div class="cal"><div class="wk">${['일','월','화','수','목','금','토'].map(x=>`<div class="wh">${x}</div>`).join('')}</div>
-    <div class="wk" style="grid-auto-rows:auto;display:grid;grid-template-columns:repeat(7,minmax(0,1fr))">${cells.join('')}</div></div>`;
+      <span class="mt">${calBase.getFullYear()}년 ${calBase.getMonth()+1}월</span></div>`;
+  let weeks = '';
+  for(let w=0; w<nWeeks; w++){
+    const ws = new Date(gridStart); ws.setDate(gridStart.getDate()+w*7);
+    const we = new Date(ws); we.setDate(ws.getDate()+6);
+    const segs = [];
+    items.forEach(r => {
+      const ds = dates(r['행사일']); if(!ds.length) return;
+      const st = ds[0], en = ds[ds.length-1];
+      if(en < ws || st > we) return;
+      segs.push({ r, s: st<ws ? 0 : st.getDay(), e: en>we ? 6 : en.getDay(), cl: st<ws, cr: en>we });
+    });
+    segs.sort((a,b) => a.s-b.s || (b.e-b.s)-(a.e-a.s));
+    const laneEnd = [];
+    segs.forEach(x => {
+      let l = laneEnd.findIndex(le => le < x.s);
+      if(l < 0){ l = laneEnd.length; laneEnd.push(x.e); } else laneEnd[l] = x.e;
+      x.lane = l;
+    });
+    const hidden = Array(7).fill(0);
+    segs.forEach(x => { if(x.lane >= MAXLANE) for(let c=x.s; c<=x.e; c++) hidden[c]++; });
+    let days = '';
+    for(let c=0; c<7; c++){
+      const d = new Date(ws); d.setDate(ws.getDate()+c);
+      const out = d.getMonth() !== calBase.getMonth();
+      const isT = +d === +TODAY;
+      days += `<div class="day${out?' out':''}"><div class="dn"><span class="${isT?'tday':''}">${d.getDate()}</span>${hidden[c]?`<span class="more">+${hidden[c]}</span>`:''}</div></div>`;
+    }
+    const bars = segs.filter(x => x.lane < MAXLANE).map(x => {
+      const cls = ['bar', gcls(x.r), x.cl?'cl':'', x.cr?'cr':''].join(' ');
+      return `<button type="button" class="${cls}" data-i="${rows.indexOf(x.r)}" style="grid-column:${x.s+1}/${x.e+2};grid-row:${x.lane+1}">${esc(x.r['행사명'])}</button>`;
+    }).join('');
+    const lanesUsed = Math.min(MAXLANE, laneEnd.length);
+    weeks += `<div class="wkrow" style="min-height:${34 + lanesUsed*26 + 6}px"><div class="days">${days}</div><div class="bars">${bars}</div></div>`;
+  }
+  return head + `<div class="cal"><div class="wk7">${['일','월','화','수','목','금','토'].map(x=>`<div class="wh">${x}</div>`).join('')}</div>${weeks}</div>`;
 }
-let calBase = new Date(TODAY.getFullYear(), TODAY.getMonth(), 1);
+
+function openPop(i){
+  const r = rows[i]; if(!r) return;
+  const g = gradeOf(r);
+  const who = [r['아산넷 등록자(게시글 올린 사람)'], r['행사 담당/문의(본문에 명시된 경우)']].filter(Boolean).map(esc).join(' · ') || '미기재';
+  const link = /^https?:/.test(r['출처 링크']||'') ? `<a class="go" href="${esc(r['출처 링크'])}" target="_blank" rel="noopener">원문 보기 →</a>` : '';
+  const hist = r['사보 이력 비교'] ? `<div class="hbox"><b>병원보 이력</b> · ${esc(r['사보 이력 비교'])}${r['게재 호수·코너·기사 제목'] ? '<br>' + esc(r['게재 호수·코너·기사 제목']) : ''}</div>` : '';
+  const ai = r['AI 가이드'] ? `<div class="aig" style="margin-top:12px"><b>AI 가이드</b><br>${esc(r['AI 가이드']).replace(/ \/ /g,'<br>')}</div>` : '';
+  document.getElementById('pop').innerHTML = `
+    <button class="pclose" aria-label="닫기">×</button>
+    <div class="ptags"><span class="lv ${g}">${g}</span><span class="cat">${esc(r['행사 분류']||'')}</span></div>
+    <h3>${esc(r['행사명'])}</h3>
+    <div class="when">${esc(r['행사일']||'날짜 미정')}</div>
+    <dl><dt>담당</dt><dd>${who}</dd><dt>주제</dt><dd>${esc(topicOf(r))}</dd></dl>
+    ${r['비고(공개 가능)'] ? `<p class="note">${esc(r['비고(공개 가능)'])}</p>` : ''}
+    ${hist}${ai}
+    ${link}`;
+  document.getElementById('ovl').classList.add('show');
+}
+function closePop(){ document.getElementById('ovl').classList.remove('show'); }
 
 function render(){
   const items = rows.filter(passes).sort((a,b) => {
@@ -321,6 +396,13 @@ document.querySelectorAll('#preset button').forEach(b => b.onclick = () => {
   document.querySelectorAll('#preset button').forEach(x => x.classList.remove('on'));
   b.classList.add('on'); preset = b.dataset.p; render();
 });
+
+document.addEventListener('click', e => {
+  const bar = e.target.closest('[data-i]');
+  if(bar){ openPop(+bar.dataset.i); return; }
+  if(e.target.id === 'ovl' || e.target.classList.contains('pclose')) closePop();
+});
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closePop(); });
 
 async function load(){
   try{
