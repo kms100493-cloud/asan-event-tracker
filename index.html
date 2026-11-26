@@ -398,7 +398,7 @@ function fmtHist(x){
 }
 let uid = 0;
 function histBox(r){
-  const lines = histLines(r);
+  const lines = histLines(r).map(x => ({x, n: +((x.match(/(\d+)\s*호/)||[])[1] || -1)})).sort((a,b) => b.n - a.n).map(o => o.x);
   if(!lines.length && !r['사보 이력 비교']) return '';
   const id = 'h' + (++uid);
   const first = lines.slice(0,3), rest = lines.slice(3);
