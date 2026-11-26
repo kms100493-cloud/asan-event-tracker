@@ -132,8 +132,8 @@
   .pclose{position:absolute;top:12px;right:12px;width:36px;height:36px;border:0;border-radius:50%;background:none;font-size:22px;color:var(--ink3);cursor:pointer}
   .pclose:hover{background:var(--line2)}
   .pop h3{margin:10px 0 0;font-size:22px;font-weight:700;letter-spacing:-.01em;line-height:1.4;padding-right:30px}
-  .gcol{display:flex;flex-direction:column;align-items:center;gap:3px;flex:none}
-  .pub{font-size:12.5px;font-weight:700;color:#0d5c4f;white-space:nowrap}
+  .pub{display:inline-flex;align-items:center;flex:none;font-size:14px;font-weight:700;color:#0d5c4f;white-space:nowrap}
+  @media (max-width:640px){.pub{font-size:11.5px}}
   .pop .bd{padding:0}
   .empty{padding:50px 0;text-align:center;color:var(--ink3)}
 
@@ -250,7 +250,7 @@
   @media (min-width:641px){
     .it > summary{align-items:flex-start}
     .nt{line-height:29px}
-    .tm,.lv,.tbadge,.hb,.chev{height:29px;display:inline-flex;align-items:center}
+    .tm,.lv,.tbadge,.hb,.chev,.pub{height:29px;display:inline-flex;align-items:center}
     .lv{justify-content:center}
     .chev{width:12px;justify-content:center}
   }
@@ -495,7 +495,7 @@ function listHTML(items){
       return `<details class="it">
         <summary>
           <span class="tm ${t?'':'na'}">${t || '시간 미정'}</span>
-          <span class="gcol"><span class="lv ${g}">${g}</span>${pubBadge(r)}</span>
+          <span class="lv ${g}">${g}</span>${pubBadge(r)}
           ${topicBadge(r)}
           <span class="mid">
             <div class="nt">${esc(r['행사명'])}${endTag}</div>
