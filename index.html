@@ -268,7 +268,7 @@
   <h1>오늘의 서울아산병원</h1>
   <div class="topline">
     <span id="meta">불러오는 중…</span>
-    <span class="mgr">제작: 김미소</span>
+    <span class="mgr">관리: 홍보팀 김미소</span>
     <button class="explbtn" id="explBtn" type="button">설명 ▾</button>
     <a class="qlink" href="https://www.amc.seoul.kr/asan/academy/event/eventList.do" target="_blank" rel="noopener">학술행사</a>
     <a class="qlink" href="http://asannet.amc.kr/" target="_blank" rel="noopener">아산넷</a>
@@ -383,7 +383,7 @@ function personsOf(r){
   return [r['아산넷 등록자(게시글 올린 사람)'], r['행사 담당/문의(본문에 명시된 경우)']]
     .map(v => (v||'').trim()).filter((v,i,a) => v && a.indexOf(v)===i).map(fmtPerson).join(' / ');
 }
-function pubBadge(r){ return r['병원보 콘텐츠']==='TRUE' ? `<span class="pbadge">병원보 ${esc(r['병원보 호']||'')}</span>` : ''; }
+function pubBadge(r){ return String(r['병원보 콘텐츠']).toUpperCase()==='TRUE' ? `<span class="pbadge">병원보 ${esc(r['병원보 호']||'')}</span>` : ''; }
 function topicBadge(r){ const k = topicKey(r); const label = k==='연구원' ? '연구' : k; return k ? `<span class="tbadge ${k}">${TOPIC_ICON[k]}${label}</span>` : ''; }
 function linkOf(r){ return /^https?:/.test(r['출처 링크']||'') ? r['출처 링크'] : ''; }
 
@@ -414,7 +414,7 @@ function detailHTML(r){
     ['장소', esc(placeOf(r))],
     ['담당', personsOf(r)],
     ['안내', esc(note)],
-    ['병원보', r['병원보 콘텐츠']==='TRUE' ? esc((r['병원보 호']||'') + ' 콘텐츠 진행') : '']
+    ['병원보', String(r['병원보 콘텐츠']).toUpperCase()==='TRUE' ? esc((r['병원보 호']||'') + ' 콘텐츠 진행') : '']
   ].filter(([k,v]) => v);
   const link = linkOf(r);
   return `${info.length ? `<div class="box info"><div class="bt">기본 정보</div>${info.map(([k,v]) => `<div class="ir"><span>${k}</span><b>${v}</b></div>`).join('')}</div>` : ''}
