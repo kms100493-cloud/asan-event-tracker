@@ -356,7 +356,7 @@ function spanOf(r){
 }
 const gradeOf = r => (r['사보 중요도']||'').trim() || '미표기';
 const topicOf = r => (r['주제별']||'').trim() || '미지정';
-const topicKey = r => ['병원','재단','연구원'].find(k => topicOf(r).includes(k)) || '';
+const topicKey = r => { const t = topicOf(r); return t.includes('병원') ? '병원' : t.includes('재단') ? '재단' : t.includes('연구') ? '연구원' : ''; };
 const histLines = r => (r['게재 호수·코너·기사 제목']||'').split(/\s*\|\s*/).filter(Boolean);
 const gcls = r => { const g = gradeOf(r); return g==='상'?'h':g==='중'?'m':g==='하'?'l':'x'; };
 const shortDate = d => `${pad(d.getMonth()+1)}/${pad(d.getDate())}`;
