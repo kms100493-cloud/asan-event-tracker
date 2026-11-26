@@ -132,7 +132,8 @@
   .pclose{position:absolute;top:12px;right:12px;width:36px;height:36px;border:0;border-radius:50%;background:none;font-size:22px;color:var(--ink3);cursor:pointer}
   .pclose:hover{background:var(--line2)}
   .pop h3{margin:10px 0 0;font-size:22px;font-weight:700;letter-spacing:-.01em;line-height:1.4;padding-right:30px}
-  .pbadge{display:inline-flex;align-items:center;flex:none;font-size:13px;font-weight:700;color:#fff;background:#0d5c4f;border-radius:6px;padding:3px 9px;white-space:nowrap}
+  .gcol{display:flex;flex-direction:column;align-items:center;gap:3px;flex:none}
+  .pub{font-size:12.5px;font-weight:700;color:#0d5c4f;white-space:nowrap}
   .pop .bd{padding:0}
   .empty{padding:50px 0;text-align:center;color:var(--ink3)}
 
@@ -383,7 +384,7 @@ function personsOf(r){
   return [r['아산넷 등록자(게시글 올린 사람)'], r['행사 담당/문의(본문에 명시된 경우)']]
     .map(v => (v||'').trim()).filter((v,i,a) => v && a.indexOf(v)===i).map(fmtPerson).join(' / ');
 }
-function pubBadge(r){ return r['병원보 콘텐츠']==='TRUE' ? `<span class="pbadge">병원보 ${esc(r['병원보 호']||'')}</span>` : ''; }
+function pubBadge(r){ return String(r['병원보 콘텐츠']).toUpperCase()==='TRUE' && r['병원보 호'] ? `<span class="pub">☑ ${esc(r['병원보 호'])}</span>` : ''; }
 function topicBadge(r){ const k = topicKey(r); const label = k==='연구원' ? '연구' : k; return k ? `<span class="tbadge ${k}">${TOPIC_ICON[k]}${label}</span>` : ''; }
 function linkOf(r){ return /^https?:/.test(r['출처 링크']||'') ? r['출처 링크'] : ''; }
 
@@ -394,7 +395,7 @@ function fmtHist(x){
 }
 let uid = 0;
 function histBox(r){
-  const lines = histLines(r).map(x => ({x, n: +((x.match(/(\d+)\s*호/)||[])[1] || -1)})).sort((a,b) => b.n - a.n).map(o => o.x);
+  const lines = histLines(r);
   if(!lines.length && !r['사보 이력 비교']) return '';
   const id = 'h' + (++uid);
   const first = lines.slice(0,3), rest = lines.slice(3);
@@ -494,8 +495,8 @@ function listHTML(items){
       return `<details class="it">
         <summary>
           <span class="tm ${t?'':'na'}">${t || '시간 미정'}</span>
-          <span class="lv ${g}">${g}</span>
-          ${topicBadge(r)}${pubBadge(r)}
+          <span class="gcol"><span class="lv ${g}">${g}</span>${pubBadge(r)}</span>
+          ${topicBadge(r)}
           <span class="mid">
             <div class="nt">${esc(r['행사명'])}${endTag}</div>
             <div class="sub">${sub}</div>
