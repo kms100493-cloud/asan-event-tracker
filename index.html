@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#f6f7f8; --card:#fff; --line:#e4e7ea; --line2:#eef0f2;
+    --bg:#faf6ee; --card:#fff; --line:#e8e2d6; --line2:#f1ece2;
     --ink:#1b1f23; --ink2:#4a525a; --ink3:#868e96; --accent:#0d5c4f;
     --hi:#d9412f; --mid:#e08a00; --lo:#4f7bb0; --na:#9aa1a8;
   }
@@ -18,7 +18,8 @@
   .wrap{max-width:1120px;margin:0 auto;padding:30px 22px 72px}
   h1{margin:0;font-size:32px;font-weight:700;letter-spacing:-.02em}
   .topline{margin-top:8px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:14.5px;color:var(--ink3)}
-  .explbtn{font:inherit;font-size:13.5px;color:var(--ink2);background:#f0f1f3;border:0;border-radius:999px;padding:4px 11px;cursor:pointer}
+  .mgr{margin-left:4px;font-size:13.5px;color:var(--ink3)}
+  .explbtn{font:inherit;font-size:13.5px;color:var(--ink2);background:#f0ece4;border:0;border-radius:999px;padding:4px 11px;cursor:pointer}
   .qlink{font-size:13.5px;font-weight:600;color:#1f6f61;background:#dcf0ea;border-radius:999px;padding:5px 13px;text-decoration:none;display:inline-flex;align-items:center;gap:4px}
   .qlink:hover{background:#cdeae1}
   .explain{margin-top:12px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:14px 18px;font-size:15px;color:var(--ink2);line-height:1.7}
@@ -62,7 +63,7 @@
   .it:last-child{border-bottom:0}
   .it > summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:14px;padding:18px 22px}
   .it > summary::-webkit-details-marker{display:none}
-  .it > summary:hover,.it[open] > summary{background:#f8fafb}
+  .it > summary:hover,.it[open] > summary{background:#fbf9f4}
   .tm{width:118px;flex:none;font-size:16px;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap}
   .tm.na{color:#b5bbc1}
   .lv{flex:none;min-width:30px;text-align:center;font-size:14px;font-weight:700;color:#fff;border-radius:6px;padding:3px 8px;background:var(--na)}
@@ -83,7 +84,7 @@
   .bd{padding:4px 22px 20px 158px;font-size:16px;color:var(--ink2)}
   .box{border-radius:18px;padding:14px 16px;margin-top:12px}
   .bt{font-size:16.5px;font-weight:700;color:var(--ink);display:flex;align-items:center;gap:8px}
-  .box.info{background:#f4f6f7}
+  .box.info{background:#f5f3ee}
   .ir{display:grid;grid-template-columns:64px 1fr;gap:10px;margin-top:8px;font-size:16px;align-items:baseline}
   .ir span{font-size:14.5px;color:var(--ink3);font-weight:600}
   .ir b{font-weight:500;color:var(--ink)}
@@ -113,7 +114,7 @@
   .days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
   .day{min-height:190px;border-right:1px solid var(--line2);border-bottom:1px solid var(--line2);padding:8px 8px 10px;min-width:0}
   .day:nth-child(7n){border-right:0}
-  .day.out{background:#fafbfb}
+  .day.out{background:#fbfaf6}
   .day.out .dn span{color:#c2c7cc}
   .dn{display:flex;align-items:center;justify-content:space-between;font-size:14px;font-weight:500;height:30px}
   .dn span{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%}
@@ -133,7 +134,6 @@
   .pop h3{margin:10px 0 0;font-size:22px;font-weight:700;letter-spacing:-.01em;line-height:1.4;padding-right:30px}
   .pop .bd{padding:0}
   .empty{padding:50px 0;text-align:center;color:var(--ink3)}
-  footer{margin-top:36px;font-size:14.5px;color:var(--ink3);text-align:right}
 
   @media (max-width:640px){
     .wrap{padding:22px 12px 50px}
@@ -149,43 +149,43 @@
 
   /* ===== 모바일 전용 글씨 축소 (640px 이하) ===== */
   @media (max-width:640px){
-    body{font-size:15px}
-    h1{font-size:25px}
-    .topline{font-size:13px}
-    .explain{font-size:13.5px}
-    .gp{font-size:14px;padding:7px 13px}
-    .lbl,.seg button{font-size:13.5px}
-    select,input[type=date],input[type=search]{font-size:13.5px}
-    .ghead .d{font-size:17px}
-    .ghead .wd,.ghead .n{font-size:13px}
-    .tm{font-size:13px}
-    .lv{font-size:11.5px;min-width:26px;padding:2px 6px}
-    .tbadge{font-size:11.5px;padding:2px 7px 2px 5px}
-    .tbadge svg{width:12px;height:12px}
-    .nt{font-size:15px}
-    .dtag{font-size:11px}
-    .sub{font-size:13px}
-    .hb{font-size:12.5px;padding:2px 8px}
-    .bd{font-size:14px}
-    .box{padding:11px 12px}
-    .bt{font-size:14px}
-    .ir{font-size:13.5px;grid-template-columns:52px 1fr}
-    .ir span{font-size:12px}
-    .box.ai .bx{font-size:13.5px}
-    .hcnt{font-size:12px}
-    .hnote{font-size:12.5px}
-    .hls > div,.hrest > div{font-size:13px}
-    .hls b{min-width:46px}
-    .lcorner{font-size:12px}
-    .morebtn{font-size:13px}
-    .golink{font-size:13px;padding:6px 12px}
-    .cal-head .mt{font-size:17px}
-    .cal-head button{font-size:14px}
-    .wh{font-size:12px}
-    .dn{font-size:12px}
-    .pop h3{font-size:18px}
-    .pop .ir{font-size:13.5px}
-    footer{font-size:12.5px}
+    body{font-size:14px}
+    h1{font-size:23px}
+    .topline{font-size:12px}
+    .mgr{font-size:12px}
+    .explain{font-size:12.5px}
+    .gp{font-size:13px;padding:6px 12px}
+    .lbl,.seg button{font-size:12.5px}
+    select,input[type=date],input[type=search]{font-size:12.5px}
+    .ghead .d{font-size:16px}
+    .ghead .wd,.ghead .n{font-size:12px}
+    .tm{font-size:12px}
+    .lv{font-size:10.5px;min-width:25px;padding:2px 5px}
+    .tbadge{font-size:10.5px;padding:2px 6px 2px 4px}
+    .tbadge svg{width:11px;height:11px}
+    .nt{font-size:14px}
+    .dtag{font-size:10px}
+    .sub{font-size:12px}
+    .hb{font-size:11.5px;padding:2px 7px}
+    .bd{font-size:13px}
+    .box{padding:10px 11px}
+    .bt{font-size:13px}
+    .ir{font-size:12.5px;grid-template-columns:50px 1fr}
+    .ir span{font-size:11px}
+    .box.ai .bx{font-size:12.5px}
+    .hcnt{font-size:11px}
+    .hnote{font-size:11.5px}
+    .hls > div,.hrest > div{font-size:12px}
+    .hls b{min-width:44px}
+    .lcorner{font-size:11px}
+    .morebtn{font-size:12px}
+    .golink{font-size:12px;padding:5px 11px}
+    .cal-head .mt{font-size:16px}
+    .cal-head button{font-size:13px}
+    .wh{font-size:11px}
+    .dn{font-size:11px}
+    .pop h3{font-size:17px}
+    .pop .ir{font-size:12.5px}
   }
 
   /* ===== 모바일 한 줄 배치 ===== */
@@ -193,31 +193,31 @@
   @media (max-width:640px){
     .card{padding:14px 12px}
     .pills{flex-wrap:nowrap;gap:4px}
-    .gp{flex:1 1 0;min-width:0;justify-content:center;padding:6px 2px;gap:3px;font-size:12.5px;letter-spacing:-.06em;white-space:nowrap}
+    .gp{flex:1 1 0;min-width:0;justify-content:center;padding:6px 2px;gap:3px;font-size:12px;letter-spacing:-.06em;white-space:nowrap}
     .gp i{width:6px;height:6px}
     .gp b{letter-spacing:-.06em}
     .stack{margin-top:12px}
     .row{gap:6px;margin-top:12px}
-    .lbl{font-size:13px;letter-spacing:-.06em}
-    input[type=date]{font-size:12.5px;padding:7px 6px;letter-spacing:-.06em;flex:1 1 0;min-width:0}
-    .tilde{font-size:13px}
+    .lbl{font-size:12px;letter-spacing:-.06em}
+    input[type=date]{font-size:12px;padding:7px 6px;letter-spacing:-.06em;flex:1 1 0;min-width:0}
+    .tilde{font-size:12px}
     #preset{display:flex;width:100%}
-    #preset button{flex:1 1 0;min-width:0;padding:6px 2px;font-size:12px;letter-spacing:-.06em;white-space:nowrap}
+    #preset button{flex:1 1 0;min-width:0;padding:6px 2px;font-size:11.5px;letter-spacing:-.06em;white-space:nowrap}
     .calbtn.desk{display:none}
     .row:has(#topicSel){display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
-    select{font-size:12px;letter-spacing:-.06em;padding:7px 4px;min-width:0;width:100%}
+    select{font-size:11.5px;letter-spacing:-.06em;padding:7px 4px;min-width:0;width:100%}
     .search{grid-column:1 / span 2;min-width:0}
-    .search input{font-size:12.5px;letter-spacing:-.04em;padding:8px 9px}
-    .calbtn.mob{display:block;grid-column:3;margin:0;font-size:12.5px;letter-spacing:-.06em;padding:8px 4px;text-align:center}
+    .search input{font-size:12px;letter-spacing:-.04em;padding:8px 9px}
+    .calbtn.mob{display:block;grid-column:3;margin:0;font-size:12px;letter-spacing:-.06em;padding:8px 4px;text-align:center}
   }
 
   /* ===== 모바일 캘린더 조정 ===== */
   @media (max-width:640px){
     .day{min-height:112px;padding:4px 3px 6px}
-    .dn{height:24px;font-size:11px}
+    .dn{height:24px;font-size:10.5px}
     .dn span{width:22px;height:22px}
     .dn span.tday{width:22px;height:22px}
-    .dn .more{font-size:9.5px}
+    .dn .more{font-size:9px}
   }
 
   /* ===== 모바일 행사 바 얇게 ===== */
@@ -234,8 +234,8 @@
   .cal-head .mt{flex:0 0 auto;margin:0 6px;font-size:22px;white-space:nowrap}
   @media (max-width:640px){
     .cal-head{margin:16px 0 10px;min-height:34px}
-    #calToday{padding:5px 12px;font-size:13px}
-    .cal-head .mt{font-size:17px;margin:0 4px}
+    #calToday{padding:5px 12px;font-size:12px}
+    .cal-head .mt{font-size:15px;margin:0 4px}
   }
 
   /* ===== PC 행사 바 높이 조금 줄이기 ===== */
@@ -253,9 +253,9 @@
     .chev{width:12px;justify-content:center}
   }
 
-  /* ===== PC 전체 글씨 크기 약 8% 축소 ===== */
+  /* ===== PC 전체 글씨 크기 축소 ===== */
   @media (min-width:641px){
-    .wrap,.pop{zoom:.92}
+    .wrap,.pop{zoom:.86}
   }
 
   /* ===== 병원보 이력 더보기 정렬 수정 ===== */
@@ -267,6 +267,7 @@
   <h1>오늘의 서울아산병원</h1>
   <div class="topline">
     <span id="meta">불러오는 중…</span>
+    <span class="mgr">관리: 홍보팀 김미소</span>
     <button class="explbtn" id="explBtn" type="button">설명 ▾</button>
     <a class="qlink" href="https://www.amc.seoul.kr/asan/academy/event/eventList.do" target="_blank" rel="noopener">학술행사</a>
     <a class="qlink" href="http://asannet.amc.kr/" target="_blank" rel="noopener">아산넷</a>
@@ -307,8 +308,6 @@
 
   <div id="list"></div>
   <div id="cal" style="display:none"></div>
-
-  <footer>관리: 홍보팀 김미소</footer>
 </div>
 
 <div class="ovl" id="ovl"><div class="pop" id="pop" role="dialog" aria-modal="true"></div></div>
@@ -550,7 +549,7 @@ function openPop(i){
   const g = gradeOf(r), t = timeOf(r);
   document.getElementById('pop').innerHTML = `
     <button class="pclose" aria-label="닫기">×</button>
-    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span class="lv ${g}">${g}</span>${topicBadge(r)}<span style="font-size:15px;color:var(--ink2)">${esc(r['행사일']||'')}${t ? ' · ' + t : ''}</span></div>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span class="lv ${g}">${g}</span>${topicBadge(r)}<span style="font-size:14px;color:var(--ink2)">${esc(r['행사일']||'')}${t ? ' · ' + t : ''}</span></div>
     <h3>${esc(r['행사명'])}</h3>
     <div class="bd" style="padding:0">${detailHTML(r)}</div>`;
   document.getElementById('ovl').classList.add('show');
