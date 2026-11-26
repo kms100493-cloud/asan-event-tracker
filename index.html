@@ -132,7 +132,7 @@
   .pclose{position:absolute;top:12px;right:12px;width:36px;height:36px;border:0;border-radius:50%;background:none;font-size:22px;color:var(--ink3);cursor:pointer}
   .pclose:hover{background:var(--line2)}
   .pop h3{margin:10px 0 0;font-size:22px;font-weight:700;letter-spacing:-.01em;line-height:1.4;padding-right:30px}
-  .gcol{display:flex;flex-direction:column;gap:4px;align-items:center;flex:none}
+  .gcol{display:flex;flex-direction:column;gap:4px;align-items:flex-start;flex:none}
   .pub{display:inline-flex;align-items:center;height:25px;flex:none;font-size:14px;font-weight:700;color:#0d5c4f;white-space:nowrap}
   @media (max-width:640px){.pub{font-size:11.5px}}
   .pop .bd{padding:0}
@@ -498,7 +498,7 @@ function listHTML(items){
       return `<details class="it">
         <summary>
           <span class="tm ${t?'':'na'}">${t || '시간 미정'}</span>
-          <span class="gcol"><span class="lv ${g}">${g}</span>${pubBadge(r)}</span>
+          <span class="gcol"><span class="lv ${g}">${g==="미표기"?"-":g}</span>${pubBadge(r)}</span>
           ${topicBadge(r)}
           <span class="mid">
             <div class="nt">${esc(r['행사명'])}${endTag}</div>
