@@ -132,6 +132,7 @@
   .pclose{position:absolute;top:12px;right:12px;width:36px;height:36px;border:0;border-radius:50%;background:none;font-size:22px;color:var(--ink3);cursor:pointer}
   .pclose:hover{background:var(--line2)}
   .pop h3{margin:10px 0 0;font-size:22px;font-weight:700;letter-spacing:-.01em;line-height:1.4;padding-right:30px}
+  .pbadge{display:inline-flex;align-items:center;flex:none;font-size:13px;font-weight:700;color:#fff;background:#0d5c4f;border-radius:6px;padding:3px 9px;white-space:nowrap}
   .pop .bd{padding:0}
   .empty{padding:50px 0;text-align:center;color:var(--ink3)}
 
@@ -382,6 +383,7 @@ function personsOf(r){
   return [r['아산넷 등록자(게시글 올린 사람)'], r['행사 담당/문의(본문에 명시된 경우)']]
     .map(v => (v||'').trim()).filter((v,i,a) => v && a.indexOf(v)===i).map(fmtPerson).join(' / ');
 }
+function pubBadge(r){ return r['병원보 콘텐츠']==='TRUE' ? `<span class="pbadge">병원보 ${esc(r['병원보 호']||'')}</span>` : ''; }
 function topicBadge(r){ const k = topicKey(r); const label = k==='연구원' ? '연구' : k; return k ? `<span class="tbadge ${k}">${TOPIC_ICON[k]}${label}</span>` : ''; }
 function linkOf(r){ return /^https?:/.test(r['출처 링크']||'') ? r['출처 링크'] : ''; }
 
@@ -411,7 +413,8 @@ function detailHTML(r){
     ['기간', esc(dateTxt)],
     ['장소', esc(placeOf(r))],
     ['담당', personsOf(r)],
-    ['안내', esc(note)]
+    ['안내', esc(note)],
+    ['병원보', r['병원보 콘텐츠']==='TRUE' ? esc((r['병원보 호']||'') + ' 콘텐츠 진행') : '']
   ].filter(([k,v]) => v);
   const link = linkOf(r);
   return `${info.length ? `<div class="box info"><div class="bt">기본 정보</div>${info.map(([k,v]) => `<div class="ir"><span>${k}</span><b>${v}</b></div>`).join('')}</div>` : ''}
@@ -492,7 +495,7 @@ function listHTML(items){
         <summary>
           <span class="tm ${t?'':'na'}">${t || '시간 미정'}</span>
           <span class="lv ${g}">${g}</span>
-          ${topicBadge(r)}
+          ${topicBadge(r)}${pubBadge(r)}
           <span class="mid">
             <div class="nt">${esc(r['행사명'])}${endTag}</div>
             <div class="sub">${sub}</div>
